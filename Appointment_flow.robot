@@ -19,6 +19,19 @@ User makes an appointment
     Remember appointment time
     Fill appointment form
     Book appointment
+    Verify appointment success
+
+User reschedules appointment
+    [tags]    de    ch    uk
+    Go to back-end admin
+    Log in to back-end admin
+    Choose Appointment from main navigation
+    Open Appointment from list
+    Reschedule appointment from interface
+    Choose random available time
+    Book rescheduled appointment
+    Verify appointment success
+
 
 Verify appointment in backend
     [tags]    de    ch    uk
@@ -38,3 +51,7 @@ User reschedules appointment
 
 User cancels appointment
     [tags]    de    ch    uk
+    Go to back-end admin
+    Choose Appointment from main navigation
+    Open Appointment from list
+    Cancel appointment from interface

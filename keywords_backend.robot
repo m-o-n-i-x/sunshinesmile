@@ -5,13 +5,13 @@ Library    String
 Library    Collections
 Library    DateTime
 Library    OperatingSystem
+Library         DebugLibrary
 #Library    RequestsLibrary
 
 **Keywords**
 
 Go to back-end admin
     SeleniumLibrary.Go to    https://admin.sunshine-test-env.de/
-    SeleniumLibrary.Wait until element is visible    name=email
 
 Log in to back-end admin
     SeleniumLibrary.Input text    name=email    ${backend_email}
@@ -32,10 +32,19 @@ Enter details of chosen appointment
     SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
 
 Change appointment
+    SeleniumLibrary.Wait until element is visible    xpath=//a[contains(text(),'Change Appointment')]
     ${appointment_url}    SeleniumLibrary.Get element attribute    xpath=//a[contains(text(),'Change Appointment')]    href
     BuiltIn.Set global variable    ${appointment_url}
     SeleniumLibrary.Click link    link=Change Appointment
     Sleep    3s
+    
+Reschedule appointment from interface
+    SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-reschedule"]
+    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-reschedule"]
+
+Cancel appointment from interface
+    SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-cancel"]
+    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-cancel"]
 
 Choose set order for given user
     SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]

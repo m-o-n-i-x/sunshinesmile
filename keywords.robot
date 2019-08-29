@@ -18,9 +18,9 @@ Set site url
 Open SSS website
     Set site url
     SeleniumLibrary.Open Browser    ${site_url}    ${browser}
-    Sleep    10s
-    #SeleniumLibrary.Maximize Browser Window
-    SeleniumLibrary.Set Window Size    1920         1200
+    Sleep    3s
+    SeleniumLibrary.Maximize Browser Window
+    #SeleniumLibrary.Set Window Size    1920         1200
 
 Choose location
     SeleniumLibrary.Click element    xpath=//a[@href="/location"]
@@ -35,9 +35,14 @@ Choose London location
 Choose random available time
     Count available times
 	  ${random_time}    Evaluate    random.randint(1, ${available_times_count})    modules=random
-	  SeleniumLibrary.Click element    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"][${random_time}]
+      ${select_random_time}  SeleniumLibrary.Get WebElement   xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"][1]
+      #SeleniumLibrary.Scroll Element Into View  ${select_random_time}
+      #SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight/2)
+      Sleep    3s
+	  SeleniumLibrary.Click element   ${select_random_time}
 
 Count available times
+    SeleniumLibrary.Wait Until Element Is Visible    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"]
     ${available_times_count}    SeleniumLibrary.Get element count    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"]
     BuiltIn.Set global variable    ${available_times_count}
 
@@ -68,7 +73,9 @@ Fill appointment form
 	  Insert booking mobile phone
 
 Select booking salutation
-    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Click element    xpath=//label[@for="booking-form-1Frau"]
+    Sleep    3s
+    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'  SeleniumLibrary.Scroll Element Into View  xpath=//label[@for="booking-form-1Frau"]
+    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'  SeleniumLibrary.Click element    xpath=//label[@for="booking-form-1Frau"]
     BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Click element    xpath=//label[@for="booking-form-1Mrs"]
 
 Insert booking email
@@ -86,10 +93,21 @@ Insert booking mobile phone
     SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-phone"]    0152215151515
 
 Book appointment
+    SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
+    Sleep    3s
     SeleniumLibrary.Click element    xpath=//button[@data-testid="booking-form-submit"]
-	  SeleniumLibrary.Wait Until Element Is Visible    xpath=//a[@data-testid="booking-success-confirm-button"]
+	SeleniumLibrary.Wait Until Element Is Visible    xpath=//a[@data-testid="booking-success-confirm-button"]
+    Sleep    3s
+
+Book rescheduled appointment
+    SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
+    Sleep    3s
+    SeleniumLibrary.Wait Until Element Is Visible    xpath=//button[@data-testid="reschedule-booking-submit"]
+    SeleniumLibrary.Click element    xpath=//button[@data-testid="reschedule-booking-submit"]
+    Sleep    3s
 
 Verify appointment success
+    SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="booking-success-confirm-button"]
     SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="booking-success-confirm-button"]
     SeleniumLibrary.Location should be    https://sunshine-test-env.de/booking/3d-scan/berlin-mitte/success

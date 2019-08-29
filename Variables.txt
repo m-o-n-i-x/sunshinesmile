@@ -1,5 +1,5 @@
 *** Variables ***
 ${staging_url}    https://sunshine-test-env.${country}/
 ${production_url}    https://www.sunshinesmile.${country}/
-${backend_email}    monika.krawiec@sunshinesmile.de
-${backend_password}    **************************
+${backend_email}    aldila.iswari@sunshinesmile.de
+${backend_password}    29Mei1989!!

@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    keywords.robot
 Resource    keywords_backend.robot
+Library         DebugLibrary
 Suite teardown    Close browser
 
 
@@ -19,6 +20,7 @@ User makes an appointment
     Remember appointment time
     Fill appointment form
     Book appointment
+    Verify appointment success
 
 Verify appointment in backend
     [tags]    de    ch    uk
@@ -33,7 +35,12 @@ User reschedules appointment
     [tags]    de    ch    uk
     SeleniumLibrary.Select Window    url=${appointment_url}
     Verify original appointment
-    SeleniumLibrary.Close Window
+    Reschedule appointment from interface
+    Choose random available time
+    Book rescheduled appointment
+    Verify appointment success
 
 User cancels appointment
     [tags]    de    ch    uk
+    SeleniumLibrary.Go To    url=${appointment_url}
+    Cancel appointment from interface
