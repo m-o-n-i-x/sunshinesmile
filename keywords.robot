@@ -209,7 +209,7 @@ Go to account creation page
     Go to    ${site_url}/account/create?customerId=${customer_id}&email=${email}
 
 Set account password
-    SeleniumLibrary.Input text    name=password-create-account    SunshineSmile123#
+    SeleniumLibrary.Input text    name=password-create-account    Sunshine123#
 
 Create account
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]/div
