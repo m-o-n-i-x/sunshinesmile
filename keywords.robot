@@ -27,6 +27,7 @@ Choose location
 
 Choose Berlin location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-berlin-mitte"]/div/p
+    SeleniumLibrary.Wait until element is visible    xpath=//div[contains(@data-testid, "booking-day-picker")]
 
 Choose London location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-london-central"]/div/p
@@ -39,6 +40,25 @@ Choose random available time
 Count available times
     ${available_times_count}    SeleniumLibrary.Get element count    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"]
     BuiltIn.Set global variable    ${available_times_count}
+
+Remember appointment time
+    ${appointment}    SeleniumLibrary.Get text    css=.bciecc
+    @{appointment_string}    String.Split string    ${appointment}     :    max_split=1
+    BuiltIn.Set global variable    ${appointment}    @{appointment_string}[1]
+    ${appointment}    String.Strip string    ${appointment}
+    BuiltIn.Set global variable    ${appointment}
+    @{appointment_saparated}    String.Split string    ${appointment}    ,
+    BuiltIn.Set global variable    ${appointment_date}    @{appointment_saparated}[0]
+    ${appointment_date}    String.Strip string    ${appointment_date}
+    Set global variable    ${appointment_date}
+    BuiltIn.Set global variable    ${appointment_time}    @{appointment_saparated}[1]
+    ${appointment_time}    String.Strip string    ${appointment_time}
+    BuiltIn.Set global variable    ${appointment_time}
+
+Verify original appointment
+    #${original_appointment}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
+    SeleniumLibrary.Element Should Contain    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa    ${appointment_date}
+    SeleniumLibrary.Element Should Contain    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa    ${appointment_time}
 
 Fill appointment form
     Select booking salutation
@@ -197,11 +217,9 @@ Create account
     BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Element text should be    css=.etqmEn > h1:nth-child(1)    Behandlungsplan von qa set
     BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Element text should be    css=.etqmEn > h1:nth-child(1)    Behandlungsplan von qa set
 
-
 User redirected to treatment plan after log in
     BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#treatment_plan
     BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#treatment_plan
-
 
 Buy now
     SeleniumLibrary.Click element    xpath=//button/div

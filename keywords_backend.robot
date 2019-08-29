@@ -22,6 +22,21 @@ Log in to back-end admin
 Choose Sets from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Sets')]
 
+Choose Appointment from main navigation
+    SeleniumLibrary.Click element    xpath=//span[contains(.,'Appointment')]
+
+Search for appointment
+    SeleniumLibrary.input text    css=th:nth-child(5) .form-control    ${email}
+
+Enter details of chosen appointment
+    SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
+
+Change appointment
+    ${appointment_url}    SeleniumLibrary.Get element attribute    xpath=//a[contains(text(),'Change Appointment')]    href
+    BuiltIn.Set global variable    ${appointment_url}
+    SeleniumLibrary.Click link    link=Change Appointment
+    Sleep    3s
+
 Choose set order for given user
     SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
 
@@ -98,7 +113,7 @@ Create treatment quotation
 
 Choose valid until date
     ${current_date}    DateTime.Get current date    result_format=%d.%m.%Y
-    SeleniumLibrary.Input text    css=div:nth-child(2) > div > .react-datepicker-wrapper .form-control    ${current_date}
+    SeleniumLibrary.Input text    css=div:nth-child(2) > div > .react-datepicker-wrapper .form-control    29.08.2019    #${current_date}
     SeleniumLibrary.Reload page
     Sleep    3s
 
@@ -132,9 +147,9 @@ Insert number of aligner upper jaw
 
 Insert treatment link
     :FOR    ${i}   IN RANGE    100
-    \    SeleniumLibrary.Input text     name=treatmentLink    https://sunshinesmile.de
+    \    SeleniumLibrary.Input text     name=treatmentLink    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
     \    SeleniumLibrary.Set focus to element    xpath=//div[@class="content-box-header"]/h1
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    https://sunshinesmile.de
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Rate pay allowed
