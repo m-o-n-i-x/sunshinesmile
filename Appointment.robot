@@ -44,3 +44,4 @@ User cancels appointment
     [tags]    de    ch    uk
     SeleniumLibrary.Go To    url=${appointment_url}
     Cancel appointment from interface
+    Verify logout success

@@ -5,7 +5,8 @@ Library    String
 Library    Collections
 Library    DateTime
 Library    OperatingSystem
-#Library    RequestsLibrary
+Library    HttpLibrary.HTTP
+Library    RequestsLibrary
 
 **Keywords**
 
@@ -112,11 +113,19 @@ Verify appointment success
     SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="booking-success-confirm-button"]
     SeleniumLibrary.Location should be    https://sunshine-test-env.de/booking/3d-scan/berlin-mitte/success
 
+Verify logout success
+    SeleniumLibrary.Location should be    https://sunshine-test-env.de
+    SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="header-login-link"]
+    SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="header-login-link"]
+Verify Login success
+    SeleniumLibrary.Wait until element is visible    xpath=//h1[@data-testid="dashboard-greeting"]
+    SeleniumLibrary.Element should be visible    xpath=//h1[@data-testid="dashboard-greeting"]
+
 Go to set url
     Go to    ${site_url}/set#voucher_code
 
 Order set
-	  SeleniumLibrary.Click element    xpath=//button[@type="button"]
+	SeleniumLibrary.Click element    xpath=//button[@type="button"]
   	SeleniumLibrary.Wait until element is visible    xpath=//input[@data-testid="address-input-first-name"]
 
 Fill delivery address form
@@ -241,3 +250,33 @@ User redirected to treatment plan after log in
 
 Buy now
     SeleniumLibrary.Click element    xpath=//button/div
+
+Open login page
+    SeleniumLibrary.Click element    xpath=//a[@data-testid="header-login-link"]
+
+Click on logout link
+    SeleniumLibrary.Click element    xpath=//a[@data-testid="header-logout-link"]
+
+Fill in login form
+    SeleniumLibrary.Input text    name=email-login    ${patient_email} 
+    SeleniumLibrary.Input text    name=password-login    ${patient_password} 
+
+Login
+    SeleniumLibrary.Click element    xpath=(//button)
+
+Create customer
+    #BuiltIn.Set global variable    @{response_create_user}    RequestsLibrary.Get Requests    https://admin.sunshine-test-env.de/api/test-automation/reset-customer
+    #Debug
+    #Create HTTP Context    https://admin.sunshine-test-env.de/api/test-automation/reset-customer    https
+    #Log Response Body 
+    #${Response}=    Get Response Body
+    RequestsLibrary.Create Session       createProfile     https://admin.sunshine-test-env.de   verify=True
+    ${response}     RequestsLibrary.Get Request    alias=createProfile    uri=/api/test-automation/reset-customer   
+    ${json_response}    Stringify Json    ${response.json()}
+    ${json}=    evaluate    json.loads('''${json_response}''')    json
+    ${id}=    Set Variable     ${response['id']}
+    Debug
+
+Open create account page
+    
+

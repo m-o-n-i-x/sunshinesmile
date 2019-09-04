@@ -3,3 +3,5 @@ ${staging_url}    https://sunshine-test-env.${country}/
 ${production_url}    https://www.sunshinesmile.${country}/
 ${backend_email}    aldila.iswari@sunshinesmile.de
 ${backend_password}    29Mei1989!!
+${patient_email}    aldila.iswari+chf@sunshinesmile.de
+${patient_password}    password
