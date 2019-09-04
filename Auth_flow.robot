@@ -14,7 +14,7 @@ Precondition
 User creates profile
     [tags]    de    ch    uk
     Create customer
-    #Open create account page
+    
 
 User logs in
     [tags]    de    ch    uk

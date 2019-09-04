@@ -7,6 +7,11 @@ Library    DateTime
 Library    OperatingSystem
 Library    HttpLibrary.HTTP
 Library    RequestsLibrary
+#Library    JsonValidator
+#Library    jsonschema
+#Library    JSONSchemaLibrary schemas
+
+
 
 **Keywords**
 
@@ -265,18 +270,12 @@ Login
     SeleniumLibrary.Click element    xpath=(//button)
 
 Create customer
-    #BuiltIn.Set global variable    @{response_create_user}    RequestsLibrary.Get Requests    https://admin.sunshine-test-env.de/api/test-automation/reset-customer
-    #Debug
-    #Create HTTP Context    https://admin.sunshine-test-env.de/api/test-automation/reset-customer    https
-    #Log Response Body 
-    #${Response}=    Get Response Body
     RequestsLibrary.Create Session       createProfile     https://admin.sunshine-test-env.de   verify=True
     ${response}     RequestsLibrary.Get Request    alias=createProfile    uri=/api/test-automation/reset-customer   
-    ${json_response}    Stringify Json    ${response.json()}
-    ${json}=    evaluate    json.loads('''${json_response}''')    json
-    ${id}=    Set Variable     ${response['id']}
-    Debug
-
-Open create account page
-    
+    ${json_data}    Set Variable    ${response.json()}
+    ${id}=   Get From Dictionary     ${json_data}    id
+    SeleniumLibrary.Go to    https://sunshine-test-env.de/account/create?customerId=${id}&email=automated-test%40sunshinesmile.de
+    SeleniumLibrary.Input text    name=password-create-account    Sunshine123@
+    SeleniumLibrary.Input text    name=password-repeat-create-account    Sunshine123@
+    SeleniumLibrary.Click element    xpath=//button[@type="submit"]
 
