@@ -1,6 +1,6 @@
 *** Settings ***
 Resource    Variables.txt
-Library    SeleniumLibrary
+Library    SeleniumLibrary    30
 Library    String
 Library    Collections
 Library    DateTime
@@ -40,12 +40,31 @@ Choose London location
 
 Choose random available time
     Count available times
-	  ${random_time}    Evaluate    random.randint(1, ${available_times_count})    modules=random
-      ${select_random_time}  SeleniumLibrary.Get WebElement   xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"][1]
-      #SeleniumLibrary.Scroll Element Into View  ${select_random_time}
-      #SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight/2)
-      Sleep    3s
-	  SeleniumLibrary.Click element   ${select_random_time}
+    ${random_time}    Evaluate    random.randint(1, ${available_times_count})    modules=random
+    SeleniumLibrary.Click element    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"][${random_time}]
+    #${chosen_time_slot}    SeleniumLibrary.Get text    css=.Grid__Container-sc-168em1b-1:nth-child(${random_time}) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
+    ${chosen_time_slot}    SeleniumLibrary.Get text    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"][${random_time}]
+    BuiltIn.Set global variable    ${chosen_time_slot}
+
+Get time slot
+    ${time_slot}    SeleniumLibrary.Get text    css=.Grid__Container-sc-168em1b-1:nth-child(${i}) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
+    BuiltIn.Set global variable    ${time_slot}
+
+Get all time slots
+    @{time_slots}    BuiltIn.Create list
+   :FOR    ${i}    IN RANGE    1    ${available_times_count}
+   \    BuiltIn.Set global variable    ${i}
+   \    Get time slot
+   \    Collections.Append to list    ${time_slots}    ${time_slot}
+   BuiltIn.Set global variable    @{time_slots}
+
+Verify original time slot not available
+    Get all time slots
+    Collections.Should not contain match    ${time_slots}    ${chosen_time_slot}
+
+Verify cancelled time slot available
+    Get all time slots
+    Collections.Should contain match    ${time_slots}    ${chosen_time_slot}
 
 Count available times
     SeleniumLibrary.Wait Until Element Is Visible    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"]
@@ -67,7 +86,7 @@ Remember appointment time
     BuiltIn.Set global variable    ${appointment_time}
 
 Verify original appointment
-    #${original_appointment}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
+    SeleniumLibrary.Wait until element is visible    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
     SeleniumLibrary.Element Should Contain    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa    ${appointment_date}
     SeleniumLibrary.Element Should Contain    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa    ${appointment_time}
 
@@ -77,11 +96,15 @@ Fill appointment form
 	  Insert booking first name
 	  Insert booking last name
 	  Insert booking mobile phone
+    Confirm 18 years old
+
+Confirm 18 years old
+    SeleniumLibrary.Click element    css=.gFYOeV
 
 Select booking salutation
     Sleep    3s
-    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'  SeleniumLibrary.Scroll Element Into View  xpath=//label[@for="booking-form-1Frau"]
-    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'  SeleniumLibrary.Click element    xpath=//label[@for="booking-form-1Frau"]
+    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Scroll Element Into View    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
+    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'  SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
     BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Click element    xpath=//label[@for="booking-form-1Mrs"]
 
 Insert booking email
@@ -113,6 +136,7 @@ Book rescheduled appointment
     Sleep    3s
 
 Verify appointment success
+    Sleep    3s
     SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="booking-success-confirm-button"]
     SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="booking-success-confirm-button"]
@@ -122,12 +146,16 @@ Verify logout success
     SeleniumLibrary.Location should be    https://sunshine-test-env.de
     SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="header-login-link"]
     SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="header-login-link"]
+
 Verify Login success
     SeleniumLibrary.Wait until element is visible    xpath=//h1[@data-testid="dashboard-greeting"]
     SeleniumLibrary.Element should be visible    xpath=//h1[@data-testid="dashboard-greeting"]
 
 Go to set url
     Go to    ${site_url}/set#voucher_code
+
+Go to website
+    Go to    ${site_url}
 
 Order set
 	SeleniumLibrary.Click element    xpath=//button[@type="button"]
@@ -263,15 +291,15 @@ Click on logout link
     SeleniumLibrary.Click element    xpath=//a[@data-testid="header-logout-link"]
 
 Fill in login form
-    SeleniumLibrary.Input text    name=email-login    ${patient_email} 
-    SeleniumLibrary.Input text    name=password-login    ${patient_password} 
+    SeleniumLibrary.Input text    name=email-login    ${patient_email}
+    SeleniumLibrary.Input text    name=password-login    ${patient_password}
 
 Login
     SeleniumLibrary.Click element    xpath=(//button)
 
 Create customer
     RequestsLibrary.Create Session       createProfile     https://admin.sunshine-test-env.de   verify=True
-    ${response}     RequestsLibrary.Get Request    alias=createProfile    uri=/api/test-automation/reset-customer   
+    ${response}     RequestsLibrary.Get Request    alias=createProfile    uri=/api/test-automation/reset-customer
     ${json_data}    Set Variable    ${response.json()}
     ${id}=   Get From Dictionary     ${json_data}    id
     SeleniumLibrary.Go to    https://sunshine-test-env.de/account/create?customerId=${id}&email=automated-test%40sunshinesmile.de
@@ -279,3 +307,14 @@ Create customer
     SeleniumLibrary.Input text    name=password-repeat-create-account    Sunshine123@
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]
 
+Reschedule appointment from interface
+    SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-reschedule"]
+    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-reschedule"]
+
+Cancel appointment from interface
+    SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-cancel"]
+    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-cancel"]
+
+Verify appointment cancelled
+    SeleniumLibrary.Wait until element is visible    xpath=//div[contains(@class, "AlertBox__AlertBoxStyled")]
+    SeleniumLibrary.Element should be visible    xpath=//div[contains(@class, "AlertBox__AlertBoxStyled")]

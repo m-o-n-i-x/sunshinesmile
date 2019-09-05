@@ -1,7 +1,6 @@
 *** Settings ***
 Resource    keywords.robot
 Resource    keywords_backend.robot
-Library         DebugLibrary
 Suite teardown    Close browser
 
 
@@ -31,6 +30,14 @@ Verify appointment in backend
     Enter details of chosen appointment
     Change appointment
 
+Verify original appointment not available
+    [tags]    de    ch    uk
+    Go to website
+    Choose location
+    BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
+    BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
+    Verify original time slot not available
+
 User reschedules appointment
     [tags]    de    ch    uk
     SeleniumLibrary.Select Window    url=${appointment_url}
@@ -44,4 +51,13 @@ User cancels appointment
     [tags]    de    ch    uk
     SeleniumLibrary.Go To    url=${appointment_url}
     Cancel appointment from interface
-    Verify logout success
+    Verify appointment cancelled
+
+Verify cancelled appointment available
+    [tags]    de    ch    uk
+    [tags]    de    ch    uk
+    Go to website
+    Choose location
+    BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
+    BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
+    Verify cancelled time slot available

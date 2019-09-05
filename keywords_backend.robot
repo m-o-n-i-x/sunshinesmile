@@ -5,7 +5,7 @@ Library    String
 Library    Collections
 Library    DateTime
 Library    OperatingSystem
-Library         DebugLibrary
+#Library         DebugLibrary
 #Library    RequestsLibrary
 
 **Keywords**
@@ -37,14 +37,6 @@ Change appointment
     BuiltIn.Set global variable    ${appointment_url}
     SeleniumLibrary.Click link    link=Change Appointment
     Sleep    3s
-    
-Reschedule appointment from interface
-    SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-reschedule"]
-    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-reschedule"]
-
-Cancel appointment from interface
-    SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-cancel"]
-    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-cancel"]
 
 Choose set order for given user
     SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
