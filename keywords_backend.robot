@@ -22,8 +22,17 @@ Log in to back-end admin
 Choose Sets from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Sets')]
 
+Choose Check-in from main navigation
+    SeleniumLibrary.Click element    xpath=//span[contains(.,'Clinic Check-In')]
+
 Choose Appointment from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Appointment')]
+
+Choose Clinic 3D-Scan from main navigation
+    SeleniumLibrary.Click element    xpath=//span[contains(.,'Clinic 3D-Scan')]
+
+Choose Shop Scan from main navigation
+    SeleniumLibrary.Click element    xpath=//span[contains(.,'Shop Scan')]
 
 Search for appointment
     SeleniumLibrary.input text    css=th:nth-child(5) .form-control    ${email}
@@ -54,6 +63,36 @@ Beam order to 'Treatment plan ok for physician' state
     SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    treatment plan ok for physician <create treatment quotation>
     Beam order
 
+Beam order to 'Check id' state
+    Unfold states list
+    SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    check id <check id>
+    Beam order
+
+Beam order to 'check in complete' state
+    Unfold states list
+    SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    check in complete
+    Beam order
+
+Beam order to 'Shop scan process started' state
+    Unfold states list
+    SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    shop scan process started
+    Beam order
+
+Beam order to 'Provide treatment setup' state
+    Unfold states list
+    SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    provide treatment setup <provide treatment setup>
+    Beam order
+
+Beam order to 'Create treatment plan' state
+    Unfold states list
+    SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    create treatment plan <create treatment plan>
+    Beam order
+
+Beam to 'Treatment plan ok for physician' state
+    Unfold states list
+    SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    treatment plan ok for physician <create treatment quotation>
+    Beam order
+
 Unfold states list
     SeleniumLibrary.Click element    css=.beam-process-select > .form-control
 
@@ -80,6 +119,10 @@ Unfold physicians list
 Choose SunshineSmile supplier
     Unfold suppliers list
     SeleniumLibrary.Select from list by label    css=.col-md-4:nth-child(2) > div > .form-control    SunshineSmile
+
+Choose HAT supplier
+    Unfold suppliers list
+    SeleniumLibrary.Select from list by label    css=.col-md-4:nth-child(2) > div > .form-control    HAT Group    
 
 Unfold suppliers list
     SeleniumLibrary.Click element    css=.col-md-4:nth-child(2) > div > .form-control
@@ -113,8 +156,8 @@ Create treatment quotation
     SeleniumLibrary.Wait until element is visible    xpath=//button[contains(.,'treatment quotation created')]
 
 Choose valid until date
-    ${current_date}    DateTime.Get current date    result_format=%d.%m.%Y
-    SeleniumLibrary.Input text    css=div:nth-child(2) > div > .react-datepicker-wrapper .form-control    29.08.2019    #${current_date}
+    ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
+    SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Reload page
     Sleep    3s
 
@@ -173,3 +216,64 @@ Remember customer id
 Go to customer overview
     SeleniumLibrary.Click link    link=qa set
     SeleniumLibrary.Wait until element is visible    xpath=//button[contains(., 'fix account problem')]
+
+Insert date if birth
+    SeleniumLibrary.Input text    name=date    1
+    SeleniumLibrary.Input text    name=month    1
+    SeleniumLibrary.Input text    name=year    1990
+
+Insert valid address
+    Insert valid street
+    Insert valid zip
+    Insert valid city
+
+Insert valid street
+    :FOR    ${i}   IN RANGE    100
+    \    SeleniumLibrary.Set focus to element    name=streetAddress
+    \    SeleniumLibrary.Input text     name=streetAddress    Badensche Str. 52
+    \    Sleep    1s
+    \    SeleniumLibrary.Set focus to element    name=zip
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=streetAddress    value    Badensche Str. 52
+    \    BuiltIn.Exit for loop if    '${status}' == 'True'
+
+Insert valid zip
+    :FOR    ${i}   IN RANGE    100
+    \    SeleniumLibrary.Set focus to element    name=zip
+    \    SeleniumLibrary.Input text     name=zip    10825
+    \    Sleep    1s
+    \    SeleniumLibrary.Set focus to element    name=email
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=zip    value    10825
+    \    BuiltIn.Exit for loop if    '${status}' == 'True'
+
+Insert valid city
+    :FOR    ${i}   IN RANGE    100
+    \    SeleniumLibrary.Set focus to element    name=city
+    \    SeleniumLibrary.Input text     name=city    Berlin
+    \    Sleep    1s
+    \    SeleniumLibrary.Set focus to element    name=email
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=city    value    Berlin
+    \    BuiltIn.Exit for loop if    '${status}' == 'True'
+
+Click Clinic Check-In link
+    SeleniumLibrary.Click link    link=Clinic Check-In
+
+Click customer link
+    SeleniumLibrary.Click link    link=qa de
+
+Create treatment plan
+    SeleniumLibrary.Click link    link=create treatment plan
+
+Choose order for given user
+    SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
+
+Check id
+    SeleniumLibrary.Click link    link=check id
+
+Id checked
+    SeleniumLibrary.Click element    xpath=//button[contains(.,'id checked')]
+
+Plan done
+    SeleniumLibrary.Click element    xpath=//button[contains(.,'plan done')]
+
+Click done
+    SeleniumLibrary.Click element    xpath=//button[contains(.,'done')]

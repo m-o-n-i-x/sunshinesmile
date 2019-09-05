@@ -12,6 +12,8 @@ Precondition
 
 User makes an appointment
     [tags]    de    ch    uk
+    Set global variable    ${first}    qa
+    Set global variable    ${last}    test
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location

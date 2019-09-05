@@ -36,11 +36,25 @@ Back end process for set order
     Choose physician
     Choose SunshineSmile supplier
     Physician assigned
-    #No pre treatment needed
-    #Setup done
-    Click set link
+    No pre treatment needed
+    Setup done
+    Click done
+    Set suite variable    ${lower_jaw}    5
+    Set suite variable    ${upper_jaw}    10
+    Insert treatment duration
+    Insert number of aligner lower jaw
+    Insert number of aligner upper jaw
+    Plan done
+    Click done
+    Choose Sets from main navigation
+    Choose set order for given user
+    Click view link in process overview section
     Beam order to 'Treatment plan ok for physician' state
-    Fill in Treatment Quotation form
+    Create treatment quotation
+    Choose valid until date
+    Insert treatment link
+    Rate pay allowed
+    Allow customer to purchase
     Treatment quotation created
     Go to customer overview
     Remember customer id
@@ -51,6 +65,7 @@ User creates account
     BuiltIn.Set test variable    ${email}
     Go to account creation page
     Set account password
+    Set account repeat password
     Create account
     User redirected to treatment plan after log in
 

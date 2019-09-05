@@ -113,10 +113,10 @@ Insert booking email
     BuiltIn.Set global variable    ${email}    monika.krawiec+${country}_${random_string}@sunshinesmile.de
 
 Insert booking first name
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-first-name"]    qa
+    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-first-name"]    ${first}
 
 Insert booking last name
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-last-name"]    ${country}
+    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-last-name"]    ${last}
 
 Insert booking mobile phone
     SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-phone"]    0152215151515
@@ -271,15 +271,20 @@ Go to account creation page
 Set account password
     SeleniumLibrary.Input text    name=password-create-account    Sunshine123#
 
+Set account repeat password
+    SeleniumLibrary.Input text    name=password-repeat-create-account    Sunshine123#
+
 Create account
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]/div
-    SeleniumLibrary.Wait until element is visible    css=.etqmEn > h1:nth-child(1)
-    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Element text should be    css=.etqmEn > h1:nth-child(1)    Behandlungsplan von qa set
-    BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Element text should be    css=.etqmEn > h1:nth-child(1)    Behandlungsplan von qa set
+    SeleniumLibrary.Wait until element is visible    css=.Headline-iv4yf7-0:nth-child(1)
+    #BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Element text should be    css=.Headline-iv4yf7-0:nth-child(1)    Behandlungsplan von qa set
+    #BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Element text should be    css=.Headline-iv4yf7-0:nth-child(1)    Behandlungsplan von qa set
+    SeleniumLibrary.Wait until element is visible    xpath=//div[contains(@class, "TreatmentDetailV2")]
 
 User redirected to treatment plan after log in
     BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#treatment_plan
     BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#treatment_plan
+    SeleniumLibrary.Element should be visible    xpath=//div[contains(@class, "TreatmentDetailV2")]
 
 Buy now
     SeleniumLibrary.Click element    xpath=//button/div
@@ -306,6 +311,7 @@ Create customer
     SeleniumLibrary.Input text    name=password-create-account    Sunshine123@
     SeleniumLibrary.Input text    name=password-repeat-create-account    Sunshine123@
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]
+    SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="header-logout-link"]
 
 Reschedule appointment from interface
     SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-reschedule"]
