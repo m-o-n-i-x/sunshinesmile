@@ -5,8 +5,8 @@ Library    String
 Library    Collections
 Library    DateTime
 Library    OperatingSystem
-Library    HttpLibrary.HTTP
 Library    RequestsLibrary
+#Library    HttpLibrary
 #Library    JsonValidator
 #Library    jsonschema
 #Library    JSONSchemaLibrary schemas
@@ -25,8 +25,8 @@ Open SSS website
     Set site url
     SeleniumLibrary.Open Browser    ${site_url}    ${browser}
     Sleep    3s
-    SeleniumLibrary.Maximize Browser Window
-    #SeleniumLibrary.Set Window Size    1920         1200
+    #SeleniumLibrary.Maximize Browser Window
+    SeleniumLibrary.Set Window Size    1920         1200
 
 Choose location
     SeleniumLibrary.Click element    xpath=//a[@href="/location"]
@@ -34,6 +34,7 @@ Choose location
 Choose Berlin location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-berlin-mitte"]/div/p
     SeleniumLibrary.Wait until element is visible    xpath=//div[contains(@data-testid, "booking-day-picker")]
+    Sleep    3s
 
 Choose London location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-london-central"]/div/p
@@ -47,22 +48,25 @@ Choose random available time
     BuiltIn.Set global variable    ${chosen_time_slot}
 
 Get time slot
-    ${time_slot}    SeleniumLibrary.Get text    css=.Grid__Container-sc-168em1b-1:nth-child(${i}) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
+    #${time_slot}    SeleniumLibrary.Get text    css=.Grid__Container-sc-168em1b-1:nth-child(${i}) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
+    ${time_slot}    SeleniumLibrary.Get text    xpath=//div[@data-testid="booking-slot-${i}"]
     BuiltIn.Set global variable    ${time_slot}
 
 Get all time slots
     @{time_slots}    BuiltIn.Create list
-   :FOR    ${i}    IN RANGE    1    ${available_times_count}
+   :FOR    ${i}    IN RANGE    0    ${available_times_count}
    \    BuiltIn.Set global variable    ${i}
    \    Get time slot
    \    Collections.Append to list    ${time_slots}    ${time_slot}
    BuiltIn.Set global variable    @{time_slots}
 
 Verify original time slot not available
+    Count available times
     Get all time slots
     Collections.Should not contain match    ${time_slots}    ${chosen_time_slot}
 
 Verify cancelled time slot available
+    Count available times
     Get all time slots
     Collections.Should contain match    ${time_slots}    ${chosen_time_slot}
 

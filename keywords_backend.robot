@@ -122,7 +122,7 @@ Choose SunshineSmile supplier
 
 Choose HAT supplier
     Unfold suppliers list
-    SeleniumLibrary.Select from list by label    css=.col-md-4:nth-child(2) > div > .form-control    HAT Group    
+    SeleniumLibrary.Select from list by label    css=.col-md-4:nth-child(2) > div > .form-control    HAT Group
 
 Unfold suppliers list
     SeleniumLibrary.Click element    css=.col-md-4:nth-child(2) > div > .form-control
@@ -157,15 +157,18 @@ Create treatment quotation
 
 Choose valid until date
     ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
-    SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/input    ${validity_date}
+    SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Reload page
     Sleep    3s
 
 Insert treatment duration
     :FOR    ${i}   IN RANGE    100
-    \    SeleniumLibrary.Input text     name=treatmentDuration    12
-    \    SeleniumLibrary.Set focus to element    xpath=//div[@class="content-box-header"]/h1
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentDuration    value    12
+    \    SeleniumLibrary.Set focus to element    name=treatmentDuration
+    \    SeleniumLibrary.Input text     name=treatmentDuration    40
+    \    Sleep    1s
+    \    SeleniumLibrary.Set focus to element    name=numberOfAlignerLowerJaw
+    \    Sleep    1s
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentDuration    value    40
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Insert number of aligner steps
@@ -176,17 +179,23 @@ Insert number of aligner steps
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Insert number of aligner lower jaw
-    :FOR    ${i}   IN RANGE    100
-    \    SeleniumLibrary.Input text     name=numberOfAlignerLowerJaw    12
-    \    SeleniumLibrary.Set focus to element    xpath=//div[@class="content-box-header"]/h1
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=numberOfAlignerLowerJaw    value    12
+    :FOR    ${i}   IN RANGE    200
+    \    SeleniumLibrary.Set focus to element    name=numberOfAlignerLowerJaw
+    \    SeleniumLibrary.Input text     name=numberOfAlignerLowerJaw    ${lower_jaw}
+    \    Sleep    1s
+    \    SeleniumLibrary.Set focus to element    name=numberOfAlignerUpperJaw
+    \    Sleep    1s
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=numberOfAlignerLowerJaw    value    ${lower_jaw}
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Insert number of aligner upper jaw
-    :FOR    ${i}   IN RANGE    100
-    \    SeleniumLibrary.Input text     name=numberOfAlignerUpperJaw    12
-    \    SeleniumLibrary.Set focus to element    xpath=//div[@class="content-box-header"]/h1
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=numberOfAlignerUpperJaw    value    12
+    :FOR    ${i}   IN RANGE    200
+    \    SeleniumLibrary.Set focus to element    name=numberOfAlignerUpperJaw
+    \    SeleniumLibrary.Input text     name=numberOfAlignerUpperJaw    ${upper_jaw}
+    \    Sleep    1s
+    \    SeleniumLibrary.Set focus to element    name=numberOfAlignerLowerJaw
+    \    Sleep    1s
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=numberOfAlignerUpperJaw    value    ${upper_jaw}
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Insert treatment link

@@ -23,6 +23,14 @@ User makes an appointment
     Book appointment
     Verify appointment success
 
+Verify original appointment not available
+    [tags]    de    ch    uk
+    Go to website
+    Choose location
+    BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
+    BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
+    Verify original time slot not available
+
 Verify appointment in backend
     [tags]    de    ch    uk
     Go to back-end admin
@@ -31,14 +39,6 @@ Verify appointment in backend
     Search for appointment
     Enter details of chosen appointment
     Change appointment
-
-Verify original appointment not available
-    [tags]    de    ch    uk
-    Go to website
-    Choose location
-    BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
-    BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
-    Verify original time slot not available
 
 User reschedules appointment
     [tags]    de    ch    uk
@@ -56,7 +56,6 @@ User cancels appointment
     Verify appointment cancelled
 
 Verify cancelled appointment available
-    [tags]    de    ch    uk
     [tags]    de    ch    uk
     Go to website
     Choose location
