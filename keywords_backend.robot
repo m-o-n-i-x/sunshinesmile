@@ -157,7 +157,8 @@ Create treatment quotation
 
 Choose valid until date
     ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
-    SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
+    #SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
+    SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Reload page
     Sleep    3s
 
