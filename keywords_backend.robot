@@ -34,6 +34,9 @@ Choose Clinic 3D-Scan from main navigation
 Choose Shop Scan from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Shop Scan')]
 
+Choose customer from main navigation
+    SeleniumLibrary.Click element    xpath=//span[contains(.,'Customer')]
+
 Search for appointment
     SeleniumLibrary.input text    css=th:nth-child(5) .form-control    ${email}
 
@@ -52,6 +55,9 @@ Choose set order for given user
 
 Click view link in process overview section
     SeleniumLibrary.Click link    link=view
+
+Click Clinic 3D-Scan in process overview section
+    SeleniumLibrary.Click link    link=Clinic 3D-Scan
 
 Beam order to 'Ready for physician assignment' state
     Unfold states list
@@ -77,6 +83,7 @@ Beam order to 'Shop scan process started' state
     Unfold states list
     SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    shop scan process started
     Beam order
+    Sleep    3s
 
 Beam order to 'Provide treatment setup' state
     Unfold states list
@@ -91,6 +98,11 @@ Beam order to 'Create treatment plan' state
 Beam to 'Treatment plan ok for physician' state
     Unfold states list
     SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    treatment plan ok for physician <create treatment quotation>
+    Beam order
+
+Beam order to 'ipr clearing up' state
+    Unfold states list
+    SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    ipr clearing up <ipr clearing up>
     Beam order
 
 Unfold states list
@@ -154,11 +166,19 @@ Fill in Treatment Quotation form
 Create treatment quotation
     SeleniumLibrary.Click link    	link=create treatment quotation
     SeleniumLibrary.Wait until element is visible    xpath=//button[contains(.,'treatment quotation created')]
+    Sleep    3s
 
 Choose valid until date
     ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
     #SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/input    ${validity_date}
+    SeleniumLibrary.Set focus to element    name=numberOfAligner
+    Sleep    1s
+
+Choose valid until date set
+    ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
+    SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
+    #SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Reload page
     Sleep    3s
 
@@ -240,6 +260,7 @@ Insert valid address
 Insert valid street
     :FOR    ${i}   IN RANGE    100
     \    SeleniumLibrary.Set focus to element    name=streetAddress
+    \    Sleep    1s
     \    SeleniumLibrary.Input text     name=streetAddress    Badensche Str. 52
     \    Sleep    1s
     \    SeleniumLibrary.Set focus to element    name=zip
@@ -279,6 +300,13 @@ Choose order for given user
 Check id
     SeleniumLibrary.Click link    link=check id
 
+Medical check
+    SeleniumLibrary.Click link	   link=medical check
+
+Ipr clearing up
+    SeleniumLibrary.Click link    link=ipr clearing up
+
+
 Id checked
     SeleniumLibrary.Click element    xpath=//button[contains(.,'id checked')]
 
@@ -287,3 +315,31 @@ Plan done
 
 Click done
     SeleniumLibrary.Click element    xpath=//button[contains(.,'done')]
+
+Click ok
+    SeleniumLibrary.Click element    xpath=//button[contains(.,'ok')]
+    Sleep    3s
+
+Pretreatment needed
+    SeleniumLibrary.Click element    xpath=//button[contains(.,'pretreatment needed')]
+
+Ipr wanted
+    SeleniumLibrary.Click element    xpath=//button[contains(.,'ipr wanted')]
+    SeleniumLibrary.Wait until element is visible    xpath=//button[contains(.,'setup done')]
+
+Tick IPR possible checkbox
+    SeleniumLibrary.Click element    css=.checkbox-col > input
+
+Choose pretreatment reason
+    Unfold pretreatment reason
+    Select pretreatment reason
+
+Unfold pretreatment reason
+    SeleniumLibrary.Click element    css=.content-box-body > .row > .col-md-6:nth-child(1) .form-control
+
+Select pretreatment reason
+    SeleniumLibrary.Select from list by label    css=.content-box-body > .row > .col-md-6:nth-child(1) .form-control    Parodontosis
+
+Fill IPR instructions
+    SeleniumLibrary.Click element    css=div:nth-child(2) > .teeth-in-between-item:nth-child(8) > .form-control
+    SeleniumLibrary.Select from list by label    css=div:nth-child(2) > .teeth-in-between-item:nth-child(8) > .form-control    0.2

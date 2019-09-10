@@ -17,8 +17,10 @@ User makes an appointment
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
+    BuiltIn.run keyword if    '${country}' == 'ch'    Choose Bern location
     Choose random available time
-    Remember appointment time
+    Run keyword unless    '${country}' == 'uk'    Remember appointment time
+    Run keyword if    '${country}' == 'uk'    Remember appointment time UK
     Fill appointment form
     Book appointment
     Verify appointment success
@@ -29,6 +31,7 @@ Verify original appointment not available
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
+    BuiltIn.run keyword if    '${country}' == 'ch'    Choose Bern location
     Verify original time slot not available
 
 Verify appointment in backend
@@ -61,4 +64,5 @@ Verify cancelled appointment available
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
+    BuiltIn.run keyword if    '${country}' == 'ch'    Choose Bern location
     Verify cancelled time slot available

@@ -7,24 +7,22 @@ Resource    keywords_backend.robot
 *** Test Cases ***
 
 Precondition
-    [tags]    de    ch    uk
+    [tags]    de
     Open SSS website
 
 User makes an appointment
-    [tags]    de    ch    uk
-    Set global variable    ${first}    sss
+    [tags]    de
+    Set global variable    ${first}    ipr
     Set global variable    ${last}    light
     Choose location
-    BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
-    BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
-    BuiltIn.run keyword if    '${country}' == 'ch'    Choose Bern location
+    Choose Berlin location
     Choose random available time
     Remember appointment time
     Fill appointment form
     Book appointment
 
-SSS light
-    [tags]    de    ch    uk
+IPR light
+    [tags]    de
     Go to back-end admin
     Log in to back-end admin
     Choose Check-in from main navigation
@@ -40,33 +38,37 @@ SSS light
     Choose Clinic 3D-Scan from main navigation
     Choose order for given user
     Click view link in process overview section
-    Beam order to 'Provide treatment setup' state
+    Medical check
+    Tick IPR possible checkbox
+    Choose pretreatment reason
+    Pretreatment needed
+    Click done
+    Click Clinic 3D-Scan in process overview section
+    Beam order to 'ipr clearing up' state
+    Ipr clearing up
+    Ipr wanted
+    Setup done
+    Choose Clinic 3D-Scan from main navigation
+    Choose order for given user
+    Click view link in process overview section
     Beam order to 'Shop scan process started' state
     Choose Shop Scan from main navigation
     Choose order for given user
     Click view link in process overview section
     Beam order to 'Ready for physician assignment' state
     Assign physician
-    Choose physician
     Choose SunshineSmile supplier
     Physician assigned
-    Choose Shop Scan from main navigation
-    Choose order for given user
-    Click view link in process overview section
-    Beam order to 'Create treatment plan' state
-    Create treatment plan
+    Click done
     Set suite variable    ${lower_jaw}    4
     Set suite variable    ${upper_jaw}    10
     Insert treatment duration
     Insert number of aligner lower jaw
     Insert number of aligner upper jaw
+    Fill IPR instructions
     Plan done
     Click done
-    Choose Shop Scan from main navigation
-    Choose order for given user
-    Click view link in process overview section
-    Beam to 'Treatment plan ok for physician' state
-    Create treatment quotation
+    Click ok
     Choose valid until date
     Insert treatment link
     Rate pay allowed

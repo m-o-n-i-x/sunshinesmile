@@ -26,7 +26,7 @@ Open SSS website
     SeleniumLibrary.Open Browser    ${site_url}    ${browser}
     Sleep    3s
     #SeleniumLibrary.Maximize Browser Window
-    SeleniumLibrary.Set Window Size    1920         1200
+    SeleniumLibrary.Set Window Size    1920         1800
 
 Choose location
     SeleniumLibrary.Click element    xpath=//a[@href="/location"]
@@ -38,6 +38,9 @@ Choose Berlin location
 
 Choose London location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-london-central"]/div/p
+
+Choose Bern location
+    SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-bern"]/div/p
 
 Choose random available time
     Count available times
@@ -89,6 +92,20 @@ Remember appointment time
     ${appointment_time}    String.Strip string    ${appointment_time}
     BuiltIn.Set global variable    ${appointment_time}
 
+Remember appointment time UK
+    ${appointment}    SeleniumLibrary.Get text    css=.bciecc
+    @{appointment_string}    String.Split string    ${appointment}     :    max_split=1
+    BuiltIn.Set global variable    ${appointment}    @{appointment_string}[1]
+    ${appointment}    String.Strip string    ${appointment}
+    BuiltIn.Set global variable    ${appointment}
+    @{appointment_saparated}    String.Split String From Right    ${appointment}    ${SPACE}    max_split=1
+    BuiltIn.Set global variable    ${appointment_date}    @{appointment_saparated}[0]
+    ${appointment_date}    String.Strip string    ${appointment_date}
+    Set global variable    ${appointment_date}
+    BuiltIn.Set global variable    ${appointment_time}    @{appointment_saparated}[1]
+    ${appointment_time}    String.Strip string    ${appointment_time}
+    BuiltIn.Set global variable    ${appointment_time}
+
 Verify original appointment
     SeleniumLibrary.Wait until element is visible    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
     SeleniumLibrary.Element Should Contain    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa    ${appointment_date}
@@ -107,9 +124,9 @@ Confirm 18 years old
 
 Select booking salutation
     Sleep    3s
-    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Scroll Element Into View    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
-    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'  SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
-    BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Click element    xpath=//label[@for="booking-form-1Mrs"]
+    SeleniumLibrary.Scroll Element Into View    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
+    SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
+
 
 Insert booking email
     ${random_string}   Generate Random String    5    [LETTERS]
@@ -144,7 +161,9 @@ Verify appointment success
     SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="booking-success-confirm-button"]
     SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="booking-success-confirm-button"]
-    SeleniumLibrary.Location should be    https://sunshine-test-env.de/booking/3d-scan/berlin-mitte/success
+    Run keyword if    '${country}' == 'de'    SeleniumLibrary.Location should be    https://sunshine-test-env.de/booking/3d-scan/berlin-mitte/success
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    https://sunshine-test-env.co.uk/booking/3d-scan/london-central/success
+    Run keyword if    '${country}' == 'ch'    SeleniumLibrary.Location should be    https://sunshine-test-env.ch/booking/3d-scan/bern/success
 
 Verify logout success
     SeleniumLibrary.Location should be    https://sunshine-test-env.de
@@ -311,7 +330,7 @@ Create customer
     ${response}     RequestsLibrary.Get Request    alias=createProfile    uri=/api/test-automation/reset-customer
     ${json_data}    Set Variable    ${response.json()}
     ${id}=   Get From Dictionary     ${json_data}    id
-    SeleniumLibrary.Go to    https://sunshine-test-env.de/account/create?customerId=${id}&email=automated-test%40sunshinesmile.de
+    SeleniumLibrary.Go to    ${site_url}/account/create?customerId=${id}&email=automated-test%40sunshinesmile.de
     SeleniumLibrary.Input text    name=password-create-account    Sunshine123@
     SeleniumLibrary.Input text    name=password-repeat-create-account    Sunshine123@
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]
