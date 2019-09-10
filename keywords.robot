@@ -249,19 +249,24 @@ Insert CC name
     SeleniumLibrary.Input text    name=credit-card-holder-name    qa ${country}
 
 Insert valid CC number
-    #Press Key    name=cardnumber
-	  SeleniumLibrary.Input text    xpath=//input[@name='cardnumber']    4111 1111 1111 1111
-    SeleniumLibrary.Input text    name=cardnumber    4111111111111111
+    SeleniumLibrary.Select frame    xpath=//iframe[@title="Secure payment input frame"]
+	  SeleniumLibrary.Input text    name=cardnumber    4111111111111111
     SeleniumLibrary.Input text    name=exp-date    1122
     SeleniumLibrary.Input text    name=cvc    111
 	  SeleniumLibrary.Input text    name=postal    11111
+    SeleniumLibrary.Unselect frame
 
 Insert Lastschrift data
     SeleniumLibrary.Input text    name=payment-sepa-account-owner    qa ${country}
     SeleniumLibrary.Input text    name=payment-sepa-iban    DE12500105170648489890
 
 Proceed to set overview
-    SeleniumLibrary.Click element    xpath=(//button[@type='submit'])[2]
+    SeleniumLibrary.Click element    xpath=//button/div
+    SeleniumLibrary.Wait until element is visible    xpath=//label[@for="terms_condition_repeal"]
+
+Proceed to set overview Lastchrift
+    SeleniumLibrary.Click element    xpath=//div[4]/button/div
+    SeleniumLibrary.Wait until element is visible    xpath=//label[@for="terms_condition_repeal"]
 
 Check Set Terms&Conditions checkbox
     SeleniumLibrary.Click element    xpath=//label[@for="terms_condition_repeal"]
@@ -347,3 +352,17 @@ Cancel appointment from interface
 Verify appointment cancelled
     SeleniumLibrary.Wait until element is visible    xpath=//div[contains(@class, "AlertBox__AlertBoxStyled")]
     SeleniumLibrary.Element should be visible    xpath=//div[contains(@class, "AlertBox__AlertBoxStyled")]
+
+Unfold voucher section
+    SeleniumLibrary.Click element    xpath=//a[@data-testid="set-checkout-voucher-cart-toggle-voucher-input"]/div
+
+Insert voucher
+    SeleniumLibrary.Input text    xpath=//input[@data-testid="set-checkout-voucher-cart-voucher-input-field"]    ${voucher_code}
+
+Apply voucher code
+    SeleniumLibrary.Click element    xpath=//button[@data-testid="set-checkout-voucher-cart-apply-voucher-code"]
+
+Apply voucher
+    Unfold voucher section
+    Insert voucher
+    Apply voucher code

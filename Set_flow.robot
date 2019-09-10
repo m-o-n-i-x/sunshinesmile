@@ -19,7 +19,7 @@ User orders set
 	  Proceed to payment methods
 	  Choose Lastschrift radio button
 	  Insert Lastschrift data
-    Proceed to set overview
+    Proceed to set overview Lastchrift
     Accept Set checkboxes
     Proceed set order success
     Verify set order success
@@ -72,3 +72,35 @@ User creates account
 #User buys treatment
     #[tags]    de
     #Buy now
+
+User orders set with CC payment
+    [tags]    de
+    Delete all cookies
+    Go to set url
+    Order set
+    Fill delivery address form
+    Proceed to payment methods
+    Choose CC radio button
+    Insert CC name
+    Insert valid CC number
+    Proceed to set overview
+    Accept Set checkboxes
+    Proceed set order success
+    Verify set order success
+
+User orders set with CC payment and 100% discount
+    [tags]    de
+    SeleniumLibrary.Delete all cookies
+    Go to set url
+    Set global variable    ${voucher_code}    gzkl-32lo-per3
+    Apply voucher
+    Order set
+    Fill delivery address form
+    Proceed to payment methods
+    Choose CC radio button
+    Insert CC name
+    Insert valid CC number
+    Proceed to set overview
+    Accept Set checkboxes
+    Proceed set order success
+    Verify set order success
