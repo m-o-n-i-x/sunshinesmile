@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    keywords.robot
 Resource    keywords_backend.robot
-#Suite teardown    Close browser
+Suite teardown    Close browser
 
 
 *** Test Cases ***
@@ -30,13 +30,17 @@ SSS light
     Choose Check-in from main navigation
     Choose order for given user
     Click view link in process overview section
-    Beam order to 'Check id' state
-    Check id
-    Insert date if birth
-    Insert valid address
-    Id checked
-    Click Clinic Check-In link
+    Run keyword if    '${country}' == 'de'    Beam order to 'Check id' state
+    Run keyword if    '${country}' == 'de'    Check id
+    Run keyword if    '${country}' == 'de'    Insert date if birth
+    Run keyword if    '${country}' == 'de'    Insert valid address
+    Run keyword if    '${country}' == 'de'    Id checked
+    Run keyword if    '${country}' == 'de'    Click Clinic Check-In link
     Beam order to 'check in complete' state
+    Run keyword if    '${country}' == 'ch'    Choose customer from main navigation
+    Run keyword if    '${country}' == 'ch'    Choose order for given user
+    Run keyword if    '${country}' == 'ch'    Insert date if birth
+    Run keyword if    '${country}' == 'ch'    Insert valid address             
     Choose Clinic 3D-Scan from main navigation
     Choose order for given user
     Click view link in process overview section
@@ -85,3 +89,17 @@ User creates account
     Set account repeat password
     Create account
     User redirected to treatment plan after log in
+
+User purchases treatment plan
+    [tags]    de    ch    uk
+    Proceed with checkout
+    Proceed with checkout
+    Choose one time payment
+    Proceed with checkout
+    Choose CC radio button
+    Insert CC name
+    Insert valid CC number
+    Proceed to order overview
+    Accept agreement checkboxes
+    Purchase treatment
+    Verify treatment purchase success

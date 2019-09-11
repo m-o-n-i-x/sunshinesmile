@@ -83,7 +83,6 @@ Beam order to 'Shop scan process started' state
     Unfold states list
     SeleniumLibrary.Select from list by label    css=.beam-process-select > .form-control    shop scan process started
     Beam order
-    Sleep    3s
 
 Beam order to 'Provide treatment setup' state
     Unfold states list
@@ -110,6 +109,7 @@ Unfold states list
 
 Beam order
     SeleniumLibrary.Click element    xpath=//button[contains(.,' beam')]
+    Sleep    2s
 
 Assign physician
     SeleniumLibrary.Click link    	link=assign physician
@@ -267,22 +267,54 @@ Insert valid street
     \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=streetAddress    value    Badensche Str. 52
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
+Set zip code
+    Run keyword if    '${country}' == 'de'    Set de zip
+    Run keyword if    '${country}' == 'ch'    Set ch zip
+    Run keyword if    '${country}' == 'uk'    Set uk zip
+
+Set de zip
+    BuiltIn.Set global variable    ${zip_code}    10825
+
+Set ch zip
+    BuiltIn.Set global variable    ${zip_code}    3013
+
+Set uk zip
+    BuiltIn.Set global variable    ${zip_code}    10825
+
 Insert valid zip
+    Set zip code
     :FOR    ${i}   IN RANGE    100
     \    SeleniumLibrary.Set focus to element    name=zip
-    \    SeleniumLibrary.Input text     name=zip    10825
+    \    Sleep    1s
+    \    SeleniumLibrary.Input text     name=zip    ${zip_code}
     \    Sleep    1s
     \    SeleniumLibrary.Set focus to element    name=email
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=zip    value    10825
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=zip    value    ${zip_code}
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
+Set city
+    Run keyword if    '${country}' == 'de'    Set de city
+    Run keyword if    '${country}' == 'ch'    Set ch city
+    Run keyword if    '${country}' == 'uk'    Set uk city
+
+Set de city
+    BuiltIn.Set global variable    ${city}    Berlin
+
+Set ch city
+    BuiltIn.Set global variable    ${city}    Bern
+
+Set uk city
+    BuiltIn.Set global variable    ${city}    London
+
 Insert valid city
+    Set city
     :FOR    ${i}   IN RANGE    100
     \    SeleniumLibrary.Set focus to element    name=city
-    \    SeleniumLibrary.Input text     name=city    Berlin
+    \    Sleep    1s
+    \    SeleniumLibrary.Input text     name=city    ${city}
     \    Sleep    1s
     \    SeleniumLibrary.Set focus to element    name=email
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=city    value    Berlin
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=city    value    ${city}
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Click Clinic Check-In link

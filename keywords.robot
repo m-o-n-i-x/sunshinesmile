@@ -237,9 +237,6 @@ Proceed to payment methods
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]/div
 
 Choose CC radio button
-    #SeleniumLibrary.Click element    xpath=//div[contains(@class, "PaymentMethodChoices")]//label[2]
-	  #Select frame    index=2
-	  #SeleniumLibrary.Click element    xpath=//*[@id="__next"]/div/div[1]/div/div/div[2]/div/div/div/div/div/div[1]/div/div/div/div/div[2]/div/div/label
 	  SeleniumLibrary.Click element    xpath=//div[contains(@class, "Grid__Container")]/div/div[2]//label
 
 Choose Lastschrift radio button
@@ -260,9 +257,9 @@ Insert Lastschrift data
     SeleniumLibrary.Input text    name=payment-sepa-account-owner    qa ${country}
     SeleniumLibrary.Input text    name=payment-sepa-iban    DE12500105170648489890
 
-Proceed to set overview
+Proceed to order overview
     SeleniumLibrary.Click element    xpath=//button/div
-    SeleniumLibrary.Wait until element is visible    xpath=//label[@for="terms_condition_repeal"]
+    Sleep    3s
 
 Proceed to set overview Lastchrift
     SeleniumLibrary.Click element    xpath=//div[4]/button/div
@@ -285,6 +282,24 @@ Accept Set checkboxes
     Check silicon allergy checkbox
     Check jaw problems checkbox
     Check not pregnant checkbox
+
+Check agreement Terms&Conditions
+    SeleniumLibrary.Click element    xpath=//label[@for="agreement_terms_and_condition"]
+
+Check agreement repeal right
+    SeleniumLibrary.Click element    xpath=//label[@for="agreement_repeal_right"]
+
+Check agreement dentist visit
+    SeleniumLibrary.Click element    xpath=//label[@for="agreement_dentist_visit"]
+
+Check agreement aligner treatment
+    SeleniumLibrary.Click element    xpath=//label[@for="agreement_aligner_clearing_up_without_treatment"]
+
+Accept agreement checkboxes
+    Check agreement Terms&Conditions
+    Check agreement repeal right
+    Check agreement dentist visit
+    Check agreement aligner treatment
 
 Proceed set order success
     SeleniumLibrary.Click element    xpath=//div[6]/button/div
@@ -366,3 +381,23 @@ Apply voucher
     Unfold voucher section
     Insert voucher
     Apply voucher code
+
+Verify set voucher applied
+    SeleniumLibrary.Element text should be    xpath=//div[@data-testid="set-checkout-voucher-cart-total-brutto-price"]    39,00 €*
+
+Verify set price on order overview page
+    SeleniumLibrary.Element text should be    xpath=//div[@class="sc-bdVaJa Base__StyledBox-sc-1r75mat-0 geEHdZ"]    39,00 €
+
+Proceed with checkout
+    SeleniumLibrary.Click element    xpath=//button[@type="button"]
+    Sleep    3s
+
+Choose one time payment
+    SeleniumLibrary.Click element    css=.Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa:nth-child(1) > div > .sc-bdVaJa > .Checkable__CheckableLabel-tbicms-0
+
+Purchase treatment
+    SeleniumLibrary.Click element    xpath=//div[5]/button/div
+
+Verify treatment purchase success
+    Sleep    3s
+    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#order_confirmation
