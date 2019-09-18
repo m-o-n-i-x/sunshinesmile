@@ -472,3 +472,12 @@ Verify treatment overview page shown
 Verify retainer overview page shown
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}accoount/checkout-retainer#order_overview
     Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#order_overview
+
+Verify light treatment
+    SeleniumLibrary.Element text should be    xpath=//div[@class="Subline-chxvop-0 TreatmentDetailV2__Subline-o0n5uo-0 TreatmentDetailV2__SublineBlue-o0n5uo-8 TreatmentDetailV2__SublineBlueBold-o0n5uo-9 cgXdCV"]    Leicht
+
+Verify upper jaw
+    SeleniumLibrary.Element text should be    xpath=(//div[@class="Subline-chxvop-0 TreatmentDetailV2__Subline-o0n5uo-0 TreatmentDetailV2__SublineBlue-o0n5uo-8 TreatmentDetailV2__SublineBlueBold-o0n5uo-9 cgXdCV"])[1]    ${upper_jaw}
+
+Verify lower jaw
+    SeleniumLibrary.Element text should be    xpath=(//div[@class="Subline-chxvop-0 TreatmentDetailV2__Subline-o0n5uo-0 TreatmentDetailV2__SublineBlue-o0n5uo-8 TreatmentDetailV2__SublineBlueBold-o0n5uo-9 cgXdCV"])[2]    ${lower_jaw}

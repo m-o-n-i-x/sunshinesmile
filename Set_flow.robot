@@ -12,7 +12,7 @@ Precondition
     Open SSS website
 
 User orders set
-    [tags]    de
+    [tags]    de    at
     Go to set url
 	  Order set
 	  Fill delivery address form
@@ -45,7 +45,7 @@ User creates account
 Back end process for set order
     [tags]    de    at
     Go to back-end admin
-    Log in to back-end admin
+    #Log in to back-end admin
     Choose Sets from main navigation
     Choose set order for given user
     Click view link in process overview section

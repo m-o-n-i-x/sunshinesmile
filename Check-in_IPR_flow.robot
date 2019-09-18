@@ -71,8 +71,8 @@ IPR light
     Click ok
     Choose valid until date
     Insert treatment link
-    Rate pay allowed
     Allow customer to purchase
+    Rate pay allowed
     Treatment quotation created
     Choose customer from main navigation
     Choose order for given user

@@ -178,7 +178,6 @@ Choose valid until date
     SeleniumLibrary.Input text    xpath=(//div[@class="react-datepicker__input-container"])[2]/input    ${validity_date}
     #SeleniumLibrary.Input text    css=.row:nth-child(4) > .col-md-6 > div    ${validity_date}
     SeleniumLibrary.Set focus to element    name=numberOfAligner
-    Reload Page
     Sleep    3s
 
 Choose valid until date set
@@ -283,6 +282,7 @@ Set zip code
     Run keyword if    '${country}' == 'de'    Set de zip
     Run keyword if    '${country}' == 'ch'    Set ch zip
     Run keyword if    '${country}' == 'uk'    Set uk zip
+    Run keyword if    '${country}' == 'at'    Set at zip
 
 Set de zip
     BuiltIn.Set global variable    ${zip_code}    10825
@@ -292,6 +292,9 @@ Set ch zip
 
 Set uk zip
     BuiltIn.Set global variable    ${zip_code}    10825
+
+Set at zip
+    BuiltIn.Set global variable    ${zip_code}    1010
 
 Insert valid zip
     Set zip code
@@ -308,6 +311,7 @@ Set city
     Run keyword if    '${country}' == 'de'    Set de city
     Run keyword if    '${country}' == 'ch'    Set ch city
     Run keyword if    '${country}' == 'uk'    Set uk city
+    Run keyword if    '${country}' == 'at'    Set at city
 
 Set de city
     BuiltIn.Set global variable    ${city}    Berlin
@@ -317,6 +321,9 @@ Set ch city
 
 Set uk city
     BuiltIn.Set global variable    ${city}    London
+
+Set at city
+    BuiltIn.Set global variable    ${city}    Wien
 
 Insert valid city
     Set city

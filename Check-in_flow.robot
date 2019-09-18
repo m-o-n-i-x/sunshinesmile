@@ -11,7 +11,7 @@ Precondition
     Open SSS website
 
 User makes an appointment
-    [tags]    de    ch    uk
+    [tags]    de    ch    uk    at
     Set global variable    ${first}    sss
     Set global variable    ${last}    ${country}
     Choose location
@@ -32,17 +32,17 @@ SSS order
     Choose Check-in from main navigation
     Choose order for given user
     Click view link in process overview section
-    Run keyword if    '${country}' == 'de' or '${country}' == 'at'    Beam order to 'Check id' state
-    Run keyword if    '${country}' == 'de' or '${country}' == 'at'    Check id
-    Run keyword if    '${country}' == 'de' or '${country}' == 'at'    Insert date if birth
-    Run keyword if    '${country}' == 'de' or '${country}' == 'at'    Insert valid address
-    Run keyword if    '${country}' == 'de' or '${country}' == 'at'    Id checked
-    Run keyword if    '${country}' == 'de' or '${country}' == 'at'    Click Clinic Check-In link
+    Run keyword if    '${country}' == 'de'    Beam order to 'Check id' state
+    Run keyword if    '${country}' == 'de'    Check id
+    Run keyword if    '${country}' == 'de'    Insert date if birth
+    Run keyword if    '${country}' == 'de'    Insert valid address
+    Run keyword if    '${country}' == 'de'    Id checked
+    Run keyword if    '${country}' == 'de'    Click Clinic Check-In link
     Beam order to 'check in complete' state
-    Run keyword unless    '${country}' == 'de' or '${country}' == 'at'    Choose customer from main navigation
-    Run keyword unless    '${country}' == 'de' or '${country}' == 'at'    Choose order for given user
-    Run keyword unless    '${country}' == 'de' or '${country}' == 'at'    Insert date if birth
-    Run keyword unless    '${country}' == 'de' or '${country}' == 'at'    Insert valid address
+    Run keyword unless    '${country}' == 'de'    Choose customer from main navigation
+    Run keyword unless    '${country}' == 'de'    Choose order for given user
+    Run keyword unless    '${country}' == 'de'    Insert date if birth
+    Run keyword unless    '${country}' == 'de'    Insert valid address
     Choose Clinic 3D-Scan from main navigation
     Choose order for given user
     Click view link in process overview section
