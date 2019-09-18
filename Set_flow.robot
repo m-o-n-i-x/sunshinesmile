@@ -8,7 +8,7 @@ Suite teardown    Close browser
 
 Precondition
     [Documentation]    Browser is opened only once for whole suite to9 reduce execution time
-    [tags]    de
+    [tags]    de    at
     Open SSS website
 
 User orders set
@@ -24,8 +24,26 @@ User orders set
     Proceed set order success
     Verify set order success
 
+Get customer from backend
+    [tags]    de    at
+    Go to back-end admin
+    Log in to back-end admin
+    Choose customer from main navigation
+    Choose set order for given user
+    Remember customer id
+
+User creates account
+    [tags]    de    at
+    ${email}    String.Replace string    ${email}    +    %2B
+    BuiltIn.Set test variable    ${email}
+    Go to account creation page
+    Set account password
+    Set account repeat password
+    Create account
+    App download visible in account
+
 Back end process for set order
-    [tags]    de
+    [tags]    de    at
     Go to back-end admin
     Log in to back-end admin
     Choose Sets from main navigation
@@ -58,16 +76,6 @@ Back end process for set order
     Treatment quotation created
     Go to customer overview
     Remember customer id
-
-User creates account
-    [tags]    de
-    ${email}    String.Replace string    ${email}    +    %2B
-    BuiltIn.Set test variable    ${email}
-    Go to account creation page
-    Set account password
-    Set account repeat password
-    Create account
-    User redirected to treatment plan after log in
 
 #User buys treatment
     #[tags]    de

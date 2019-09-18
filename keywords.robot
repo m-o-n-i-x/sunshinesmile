@@ -16,17 +16,18 @@ Library    RequestsLibrary
 **Keywords**
 
 Set site url
-    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'staging'    BuiltIn.Set global variable    ${staging_url}    https://sunshine-test-env.co.uk
-    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    BuiltIn.Set global variable    ${production_url}    https://sunshinesmile.co.uk
+    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'staging'    BuiltIn.Set global variable    ${staging_url}    https://sunshine-test-env.co.uk/
+    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    BuiltIn.Set global variable    ${production_url}    https://sunshinesmile.co.uk/
     Run keyword if    '${env}' == 'staging'    Set global variable    ${site_url}    ${staging_url}
 	  Run keyword if    '${env}' == 'production'    Set global variable    ${site_url}    ${production_url}
 
 Open SSS website
     Set site url
-    SeleniumLibrary.Open Browser    ${site_url}    ${browser}
+    ${default_browser}    SeleniumLibrary.Open Browser    ${site_url}    ${browser}
     Sleep    3s
     #SeleniumLibrary.Maximize Browser Window
     SeleniumLibrary.Set Window Size    1920         1800
+    BuiltIn.Set global variable    ${default_browser}
 
 Choose location
     SeleniumLibrary.Click element    xpath=//a[@href="/location"]
@@ -41,6 +42,9 @@ Choose London location
 
 Choose Bern location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-bern"]/div/p
+
+Choose Wien location
+    SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-wien-1-bezirk"]/div/p
 
 Choose random available time
     Count available times
@@ -125,8 +129,8 @@ Confirm 18 years old
 Select booking salutation
     Sleep    3s
     SeleniumLibrary.Scroll Element Into View    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
-    SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
-
+    #SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
+    SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(2) .Checkable__CheckableLabel-tbicms-0
 
 Insert booking email
     ${random_string}   Generate Random String    5    [LETTERS]
@@ -322,11 +326,11 @@ Create account
     SeleniumLibrary.Wait until element is visible    css=.Headline-iv4yf7-0:nth-child(1)
     #BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Element text should be    css=.Headline-iv4yf7-0:nth-child(1)    Behandlungsplan von qa set
     #BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Element text should be    css=.Headline-iv4yf7-0:nth-child(1)    Behandlungsplan von qa set
-    SeleniumLibrary.Wait until element is visible    xpath=//div[contains(@class, "TreatmentDetailV2")]
+    Sleep    3s
 
 User redirected to treatment plan after log in
     BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#treatment_plan
-    BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#treatment_plan
+    BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#treatment_plan
     SeleniumLibrary.Element should be visible    xpath=//div[contains(@class, "TreatmentDetailV2")]
 
 Buy now
@@ -390,7 +394,7 @@ Verify set price on order overview page
 
 Proceed with checkout
     SeleniumLibrary.Click element    xpath=//button[@type="button"]
-    Sleep    3s
+    Sleep    5s
 
 Choose one time payment
     SeleniumLibrary.Click element    css=.Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa:nth-child(1) > div > .sc-bdVaJa > .Checkable__CheckableLabel-tbicms-0
@@ -400,4 +404,71 @@ Purchase treatment
 
 Verify treatment purchase success
     Sleep    3s
-    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#order_confirmation
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#order_confirmation
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#order_confirmation
+
+Verify retainer purchase success
+    Sleep    3s
+    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#order_overview
+    SeleniumLibrary.Page should contain     Ihre Bestellung ist bei uns eingegangen
+
+Open secondary browser
+    ${non_default_browser}=     Open Browser    ${site_url}    ${browser}
+    Maximize Browser Window
+    Set Global Variable    ${non_default_browser}
+    Sleep    3s
+
+App download visible in account
+    SeleniumLibrary.element should be visible    xpath=//img[contains(@src, "google.svg")]
+    SeleniumLibrary.element should be visible    xpath=//img[contains(@src, "apple.svg")]
+
+Return to home page
+    SeleniumLibrary.Click element    xpath=//a[@href="/"]
+
+Purchase retainer
+    SeleniumLibrary.Click element    xpath=//a[@data-testid="header-retainer"]
+    Sleep    3s
+
+Check retainer Terms&Condition
+    SeleniumLibrary.Click element    xpath=//label[@for="terms_condition"]
+
+Check retainer data protect
+    SeleniumLibrary.Click element    xpath=//label[@for="repeal_data_protect"]
+
+Accept retainer checkboxes
+    Check retainer Terms&Condition
+    Check retainer data protect
+
+Proceed to retainer payment
+    SeleniumLibrary.Click element    xpath=(//button[@type='button'])[2]
+
+Buy retainer
+    SeleniumLibrary.Click element    xpath=//div[2]/div/div/div/form/div[3]/button/div
+
+Verify voucher code page shown
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#voucher_code
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#voucher_code
+
+Verify retainer voucher code page shown
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-retainer#voucher_code
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#voucher_code
+
+Verify payment rate or one time shown
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#payment_rate_or_one_time
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#payment_rate_or_one_time
+
+Verify payment page shown
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#payment_one_time
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#payment_one_time
+
+Verify retainer payment page shown
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-retainer#payment
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#payment
+
+Verify treatment overview page shown
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#order_overview
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#order_overview
+
+Verify retainer overview page shown
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}accoount/checkout-retainer#order_overview
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#order_overview
