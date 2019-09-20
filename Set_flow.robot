@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    keywords.robot
 Resource    keywords_backend.robot
-Suite teardown    Close browser
+Suite teardown    Close All Browsers
 
 
 *** Test Cases ***
@@ -15,6 +15,7 @@ User orders set
     [tags]    de    at
     Go to set url
 	  Order set
+    Generate random email
 	  Fill delivery address form
 	  Proceed to payment methods
 	  Choose Lastschrift radio button
@@ -23,6 +24,13 @@ User orders set
     Accept Set checkboxes
     Proceed set order success
     Verify set order success
+
+Second set order not possible for same email
+    Go to set url
+    Order set
+    Fill delivery address form
+    Proceed to payment methods
+    Verify email already in use
 
 Get customer from backend
     [tags]    de    at
@@ -45,7 +53,7 @@ User creates account
 Back end process for set order
     [tags]    de    at
     Go to back-end admin
-    #Log in to back-end admin
+    Run keyword if    '${country}' == 'de'    Log in to back-end admin
     Choose Sets from main navigation
     Choose set order for given user
     Click view link in process overview section
@@ -71,8 +79,8 @@ Back end process for set order
     Create treatment quotation
     Choose valid until date
     Insert treatment link
+    Allow customer to purchase set
     Rate pay allowed
-    Allow customer to purchase
     Treatment quotation created
     Go to customer overview
     Remember customer id

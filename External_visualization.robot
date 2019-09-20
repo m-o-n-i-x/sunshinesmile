@@ -7,25 +7,24 @@ Suite teardown    Close All Browsers
 *** Test Cases ***
 
 Precondition
-    [tags]    de    ch    uk
+    [tags]    de    ch    uk    at
     Open SSS website
 
 User makes an appointment
-    [tags]    de    ch    uk
-    Set global variable    ${first}    3Shape
-    Set global variable    ${last}    Visualization    
+    [tags]    de    ch    uk    at
+    Set global variable    ${first}    External
+    Set global variable    ${last}    Visualization
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
     BuiltIn.run keyword if    '${country}' == 'ch'    Choose Bern location
+    BuiltIn.run keyword if    '${country}' == 'at'    Choose Wien location
     Choose random available time
-    Run keyword unless    '${country}' == 'uk'    Remember appointment time
-    Run keyword if    '${country}' == 'uk'    Remember appointment time UK
     Fill appointment form
     Book appointment
 
-3Shape
-    [tags]    de    ch    uk
+External
+    [tags]    de    ch    uk    at
     Go to back-end admin
     Log in to back-end admin
     Choose Check-in from main navigation
@@ -73,29 +72,16 @@ User makes an appointment
     Beam to 'Treatment plan ok for physician' state
     Create treatment quotation
     Choose valid until date
-    Upload 3Shape files
-    Sleep    5s
-    Verify 3Shape files uploaded
-    Trigger visualization
-    Open secondary browser
-    Go to visualization page
-    Verify visualization triggered
-    Wait for visualization done
-    Go to back-end admin
-    Log in to back-end admin
-    Choose Shop Scan from main navigation
-    Choose order for given user
-    Click view link in process overview section
-    Create treatment quotation
-    Rate pay allowed
+    Insert treatment link
     Allow customer to purchase
+    Rate pay allowed
     Treatment quotation created
     Choose customer from main navigation
     Choose order for given user
     Remember customer id
 
 User creates account
-    [tags]    de    ch    uk
+    [tags]    de    ch    uk    at
     ${email}    String.Replace string    ${email}    +    %2B
     BuiltIn.Set test variable    ${email}
     Go to account creation page

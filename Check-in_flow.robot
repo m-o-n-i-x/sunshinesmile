@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    keywords.robot
 Resource    keywords_backend.robot
-#Suite teardown    Close browser
+Suite teardown    Close All Browsers
 
 
 *** Test Cases ***
@@ -111,7 +111,7 @@ User purchases treatment plan
     Verify treatment purchase success
 
 User purchases retainer
-    [tags]    de    ch
+    [tags]    de    ch    at
     Return to home page
     Purchase retainer
     Verify retainer voucher code page shown

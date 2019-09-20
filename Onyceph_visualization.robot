@@ -12,8 +12,8 @@ Precondition
 
 User makes an appointment
     [tags]    de    ch    uk
-    Set global variable    ${first}    Sss
-    Set global variable    ${last}    Onyceph
+    Set global variable    ${first}    Onyceph
+    Set global variable    ${last}    Visualization    
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location

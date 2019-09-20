@@ -134,8 +134,8 @@ Select booking salutation
 
 Insert booking email
     ${random_string}   Generate Random String    5    [LETTERS]
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-email"]    monika.krawiec+${country}_${random_string}@sunshinesmile.de
-    BuiltIn.Set global variable    ${email}    monika.krawiec+${country}_${random_string}@sunshinesmile.de
+    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-email"]    sss.qa12345+${country}_${random_string}@gmail.de
+    BuiltIn.Set global variable    ${email}    sss.qa12345+${country}_${random_string}@gmail.de
 
 Insert booking first name
     SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-first-name"]    ${first}
@@ -227,9 +227,11 @@ Insert delivery birthday
 	  SeleniumLibrary.Select from list by value    xpath=//select[@data-testid="set-checkout-customer-detail-birthday-year"]    1990
 
 Insert delivery email
+    SeleniumLibrary.Input text    xpath=//input[@data-testid="set-checkout-customer-detail-email"]    ${email}
+
+Generate random email
     ${random_string}   Generate Random String    5    [LETTERS]
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="set-checkout-customer-detail-email"]    monika.krawiec+${country}_${random_string}@sunshinesmile.de
-    BuiltIn.Set global variable    ${email}    monika.krawiec+${country}_${random_string}@sunshinesmile.de
+    BuiltIn.Set global variable    ${email}    sss.qa12345+${country}_${random_string}@gmail.com
 
 Insert delivery phone
     SeleniumLibrary.Input text    xpath=//input[@data-testid="set-checkout-customer-detail-phone"]    0152215151515
@@ -481,3 +483,32 @@ Verify upper jaw
 
 Verify lower jaw
     SeleniumLibrary.Element text should be    xpath=(//div[@class="Subline-chxvop-0 TreatmentDetailV2__Subline-o0n5uo-0 TreatmentDetailV2__SublineBlue-o0n5uo-8 TreatmentDetailV2__SublineBlueBold-o0n5uo-9 cgXdCV"])[2]    ${lower_jaw}
+
+Get available locations
+    @{locations}    BuiltIn.Create list
+    Count available locations
+    :FOR    ${i}    IN RANGE    1    ${locations_count}+1
+    \    BuiltIn.Set global variable    ${i}
+    \    Get location name
+    \    Collections.Append to list    ${locations}    ${location_name}
+    BuiltIn.Set global variable    @{locations}
+
+Get location name
+    ${location_name}    SeleniumLibrary.Get text    xpath=//div[contains(@class, "LocationBasic__LocationByCountryDiv")]/a[${i}]/div/p
+    BuiltIn.Set global variable    ${location_name}
+
+Count available locations
+    ${locations_count}    SeleniumLibrary.Get element count    xpath=//div[contains(@class, "LocationBasic__LocationByCountryDiv")]/a
+    BuiltIn.Set global variable    ${locations_count}
+
+Verify locations ordered alphabetically
+    @{locations_sorted}    Collections.Copy list    ${locations}
+    Collections.Sort list    ${locations_sorted}
+    Collections.Lists should be equal    ${locations_sorted}    ${locations}
+
+Verify google maps shown
+    Sleep    5s
+    SeleniumLibrary.Element should not be visible    css=.gm-err-content
+
+Verify email already in use
+    SeleniumLibrary.Element text should be    xpath=//div[@data-testid="error-message-email"]    Diese E-Mail ist bereits in Benutzung

@@ -2,7 +2,7 @@
 Resource    keywords.robot
 Resource    keywords_backend.robot
 Library         DebugLibrary
-Suite teardown    Close browser
+Suite teardown    Close All Browsers
 
 
 *** Test Cases ***

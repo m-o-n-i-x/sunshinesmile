@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    keywords.robot
 Resource    keywords_backend.robot
-Suite teardown    Close browser
+Suite teardown    Close All Browsers
 
 
 *** Test Cases ***
@@ -19,6 +19,7 @@ User makes an appointment
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
     BuiltIn.run keyword if    '${country}' == 'ch'    Choose Bern location
     BuiltIn.run keyword if    '${country}' == 'at'    Choose Wien location
+    Verify google maps shown
     Choose random available time
     Run keyword unless    '${country}' == 'uk'    Remember appointment time
     Run keyword if    '${country}' == 'uk'    Remember appointment time UK

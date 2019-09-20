@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    keywords.robot
 Resource    keywords_backend.robot
-#Suite teardown    Close browser
+Suite teardown    Close All Browsers
 
 
 *** Test Cases ***
