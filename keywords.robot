@@ -134,8 +134,8 @@ Select booking salutation
 
 Insert booking email
     ${random_string}   Generate Random String    5    [LETTERS]
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-email"]    sss.qa12345+${country}_${random_string}@gmail.de
-    BuiltIn.Set global variable    ${email}    sss.qa12345+${country}_${random_string}@gmail.de
+    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-email"]    sss.qa12345+${country}_${random_string}@gmail.com
+    BuiltIn.Set global variable    ${email}    sss.qa12345+${country}_${random_string}@gmail.com
 
 Insert booking first name
     SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-first-name"]    ${first}
@@ -328,7 +328,7 @@ Create account
     SeleniumLibrary.Wait until element is visible    css=.Headline-iv4yf7-0:nth-child(1)
     #BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Element text should be    css=.Headline-iv4yf7-0:nth-child(1)    Behandlungsplan von qa set
     #BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Element text should be    css=.Headline-iv4yf7-0:nth-child(1)    Behandlungsplan von qa set
-    Sleep    3s
+    Sleep    5s
 
 User redirected to treatment plan after log in
     BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#treatment_plan

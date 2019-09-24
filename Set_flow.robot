@@ -79,7 +79,7 @@ Back end process for set order
     Create treatment quotation
     Choose valid until date
     Insert treatment link
-    Allow customer to purchase set
+    Allow customer to purchase
     Rate pay allowed
     Treatment quotation created
     Go to customer overview

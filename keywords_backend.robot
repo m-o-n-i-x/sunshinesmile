@@ -174,9 +174,7 @@ Create treatment quotation
 Choose valid until date
     Run keyword and ignore error    Close treatment quotation preview
     ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
-    #SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Input text    xpath=(//div[@class="react-datepicker__input-container"])[2]/input    ${validity_date}
-    #SeleniumLibrary.Input text    css=.row:nth-child(4) > .col-md-6 > div    ${validity_date}
     SeleniumLibrary.Set focus to element    name=numberOfAligner
     Sleep    3s
 
@@ -231,6 +229,7 @@ Insert treatment link
     \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
     Sleep    3s
+    SeleniumLibrary.Set focus to element    name=treatmentDuration
 
 Rate pay allowed
     SeleniumLibrary.Click element    css=.col-md-6:nth-child(2) > .react-form-checkbox input
@@ -238,15 +237,14 @@ Rate pay allowed
     SeleniumLibrary.Set focus to element    name=treatmentDuration
     Sleep    1s
 
-Allow customer to purchase
-    SeleniumLibrary.Click element    css=.col-md-6:nth-child(1) > .react-form-checkbox input
-    #SeleniumLibrary.Click element    css=.row:nth-child(3) > .col-md-6:nth-child(1) input
-    Sleep    3s
-    SeleniumLibrary.Set focus to element    name=treatmentDuration
-    Sleep    1s
+Purchase checkbox visible
+    ${purchase_visible}    Run keyword and return status   SeleniumLibrary.element text should not be visible     css=.row:nth-child(2) .label-col    Purchased
+    BuiltIn.Set global variable    ${purchase_visible}
 
-Allow customer to purchase test
-    SeleniumLibrary.Click element    css=.row:nth-child(3) > .col-md-6:nth-child(1) input
+Allow customer to purchase
+    Purchase checkbox visible
+    Run keyword if    '${purchase_visible}' == 'False'    SeleniumLibrary.Click element    css=.col-md-6:nth-child(1) > .react-form-checkbox input
+    Run keyword if    '${purchase_visible}' == 'True'    SeleniumLibrary.Click element    css=.col-md-6:nth-child(1) > .react-form-checkbox input
     Sleep    3s
     SeleniumLibrary.Set focus to element    name=treatmentDuration
     Sleep    1s
@@ -255,7 +253,7 @@ Treatment quotation created
     SeleniumLibrary.Click element    xpath=//button[contains(.,'treatment quotation created')]
     SeleniumLibrary.Wait until element is not visible    xpath=//button[contains(.,'treatment quotation created')]
     SeleniumLibrary.Wait until element is visible    xpath=//button[contains(.,'treatment sold')]
-    Sleep    5s
+    Sleep    10s
 
 Remember customer id
     ${current_location}    SeleniumLibrary.Log Location
