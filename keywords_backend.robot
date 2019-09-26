@@ -11,7 +11,9 @@ Library    OperatingSystem
 **Keywords**
 
 Go to back-end admin
-    SeleniumLibrary.Go to    https://admin.sunshine-test-env.de/
+    Run keyword if    '${env}' == 'staging'    SeleniumLibrary.Go to    https://admin.sunshine-test-env.de/
+    Run keyword if    '${env}' == 'qa1'    SeleniumLibrary.Go to    https://pe-qa1.sunshine-test-env.de/
+    Run keyword if    '${env}' == 'qa2'    SeleniumLibrary.Go to    https://pe-qa2.sunshine-test-env.de/
 
 Log in to back-end admin
     SeleniumLibrary.Input text    name=email    ${backend_email}
@@ -388,6 +390,7 @@ Click ok
 
 Pretreatment needed
     SeleniumLibrary.Click element    xpath=//button[contains(.,'pretreatment needed')]
+    Sleep    3s
 
 Ipr wanted
     SeleniumLibrary.Click element    xpath=//button[contains(.,'ipr wanted')]
@@ -413,37 +416,37 @@ Fill IPR instructions
 Upload Onyceph files
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step1.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step2.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step3.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step4.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step5.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step6.obj
-    Sleep    3s
+    Sleep    5s
 
 Upload 3Shape files
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup1.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup2.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup3.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup4.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup5.obj
-    Sleep    3s
+    Sleep    5s
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup6.obj
-    Sleep    3s
+    Sleep    5s
 
 Upload PDF
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a video')]
     Choose File    xpath=(//input[@type='file'])[1]    ${CURDIR}${/}visualization\\view-video-file.pdf
-    Sleep    5s
+    Sleep    8s
 
 Verify Onyceph files uploaded
     SeleniumLibrary.Element text should be    xpath=//table[@class="default-table"]/tbody/tr[1]/td[1]    Step1.obj

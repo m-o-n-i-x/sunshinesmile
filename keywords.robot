@@ -17,8 +17,12 @@ Library    RequestsLibrary
 
 Set site url
     BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'staging'    BuiltIn.Set global variable    ${staging_url}    https://sunshine-test-env.co.uk/
+    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'qa1'    BuiltIn.Set global variable    ${qa1_url}    https://qa1.sunshine-test-env.co.uk/
+    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'qa2'    BuiltIn.Set global variable    ${qa2_url}    https://qa2.sunshine-test-env.co.uk/
     BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    BuiltIn.Set global variable    ${production_url}    https://sunshinesmile.co.uk/
     Run keyword if    '${env}' == 'staging'    Set global variable    ${site_url}    ${staging_url}
+    Run keyword if    '${env}' == 'qa1'    Set global variable    ${site_url}    ${qa1_url}
+    Run keyword if    '${env}' == 'qa2'    Set global variable    ${site_url}    ${qa2_url}
 	  Run keyword if    '${env}' == 'production'    Set global variable    ${site_url}    ${production_url}
 
 Open SSS website
@@ -301,6 +305,9 @@ Check agreement dentist visit
 Check agreement aligner treatment
     SeleniumLibrary.Click element    xpath=//label[@for="agreement_aligner_clearing_up_without_treatment"]
 
+Check agreement zab
+    SeleniumLibrary.Click element    xpath=//label[contains(@for, "agreement_zab_sunshine")]
+
 Accept agreement checkboxes
     Check agreement Terms&Conditions
     Check agreement repeal right
@@ -403,6 +410,9 @@ Choose one time payment
 
 Purchase treatment
     SeleniumLibrary.Click element    xpath=//div[5]/button/div
+
+Purchase treatment rate payment
+    SeleniumLibrary.Click element    xpath=//div[6]/button/div
 
 Verify treatment purchase success
     Sleep    3s
@@ -512,3 +522,19 @@ Verify google maps shown
 
 Verify email already in use
     SeleniumLibrary.Element text should be    xpath=//div[@data-testid="error-message-email"]    Diese E-Mail ist bereits in Benutzung
+
+Remember chosen rate option
+    ${months}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(3) .kXSBcv
+    BuiltIn.Set global variable    ${months}
+    ${amount}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(3) .kDPWyI
+    BuiltIn.Set global variable    ${amount}
+
+Remember rate details in checkout overview
+    ${months_checkout_overview}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(4)
+    BuiltIn.Set global variable    ${months_checkout_overview}
+    ${amount_checkout_overview}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(7)
+    BuiltIn.Set global variable    ${amount_checkout_overview}
+
+Verify rate details in checkout overview
+    BuiltIn.Should contain    ${months}    ${months_checkout_overview}
+    BuiltIn.Should contain    ${amount}    ${amount_checkout_overview}

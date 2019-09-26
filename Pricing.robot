@@ -69,8 +69,8 @@ SSS light
     Create treatment quotation
     Choose valid until date
     Insert treatment link
-    Rate pay allowed
     Allow customer to purchase
+    Rate pay allowed
     Treatment quotation created
 
 User makes an appointment 2
@@ -132,8 +132,8 @@ SSS medium
     Create treatment quotation
     Choose valid until date
     Insert treatment link
-    Rate pay allowed
     Allow customer to purchase
+    Rate pay allowed
     Treatment quotation created
 
 User makes an appointment 3
@@ -195,8 +195,8 @@ SSS complex
     Create treatment quotation
     Choose valid until date
     Insert treatment link
-    Rate pay allowed
     Allow customer to purchase
+    Rate pay allowed
     Treatment quotation created
 
 User makes an appointment 4
@@ -259,6 +259,7 @@ HAT light
     Choose valid until date
     Insert treatment link
     Allow customer to purchase
+    Rate pay allowed
     Treatment quotation created
 
 User makes an appointment 5
@@ -321,6 +322,7 @@ HAT medium
     Choose valid until date
     Insert treatment link
     Allow customer to purchase
+    Rate pay allowed
     Treatment quotation created
 
 User makes an appointment 6
@@ -383,4 +385,5 @@ HAT complex
     Choose valid until date
     Insert treatment link
     Allow customer to purchase
+    Rate pay allowed
     Treatment quotation created
