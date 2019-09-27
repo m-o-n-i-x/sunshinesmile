@@ -1,6 +1,5 @@
 *** Settings ***
 Resource    keywords.robot
-Resource    keywords_backend.robot
 Suite teardown    Close All Browsers
 
 
@@ -13,7 +12,7 @@ Precondition
 User makes an appointment
     [tags]    de    ch    uk
     Set global variable    ${first}    3Shape
-    Set global variable    ${last}    Visualization    
+    Set global variable    ${last}    Visualization
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location

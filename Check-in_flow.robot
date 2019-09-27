@@ -1,6 +1,5 @@
 *** Settings ***
 Resource    keywords.robot
-Resource    keywords_backend.robot
 Suite teardown    Close All Browsers
 
 

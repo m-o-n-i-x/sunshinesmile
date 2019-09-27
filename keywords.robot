@@ -1,11 +1,14 @@
 *** Settings ***
 Resource    Variables.txt
+Resource    keywords_set.robot
+Resource    keywords_backend.robot
 Library    SeleniumLibrary    30
 Library    String
 Library    Collections
 Library    DateTime
 Library    OperatingSystem
 Library    RequestsLibrary
+#Library         DebugLibrary
 #Library    HttpLibrary
 #Library    JsonValidator
 #Library    jsonschema
@@ -182,66 +185,12 @@ Verify Login success
     SeleniumLibrary.Wait until element is visible    xpath=//h1[@data-testid="dashboard-greeting"]
     SeleniumLibrary.Element should be visible    xpath=//h1[@data-testid="dashboard-greeting"]
 
-Go to set url
-    Go to    ${site_url}/set#voucher_code
-
 Go to website
     Go to    ${site_url}
-
-Order set
-	SeleniumLibrary.Click element    xpath=//button[@type="button"]
-  	SeleniumLibrary.Wait until element is visible    xpath=//input[@data-testid="address-input-first-name"]
-
-Fill delivery address form
-    Insert delivery first name
-    Insert delivery last name
-	  Insert delivery street
-	  Insert delivery house number
-	  Insert delivery postal code
-	  Insert delivery city
-	  Insert delivery birthday
-	  Insert delivery email
-	  Insert delivery phone
-	  Accept delivery Terms&Conditions
-
-Insert delivery first name
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="address-input-first-name"]    qa
-
-Insert delivery last name
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="address-input-last-name"]    set
-
-Insert delivery street
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="address-input-street"]    Teststr. 1
-
-Insert delivery house number
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="address-input-house-number"]    20
-
-Insert delivery postal code
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="address-input-zip"]    10589
-
-Insert delivery city
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="address-input-city"]    Berlin
-
-Insert delivery birthday
-    SeleniumLibrary.Click element   xpath=//select[@data-testid="set-checkout-customer-detail-birthday-day"]
-	  SeleniumLibrary.Select from list by value    xpath=//select[@data-testid="set-checkout-customer-detail-birthday-day"]    1
-	  SeleniumLibrary.Click element    xpath=//select[@data-testid="set-checkout-customer-detail-birthday-month"]
-	  SeleniumLibrary.Select from list by value    xpath=//select[@data-testid="set-checkout-customer-detail-birthday-month"]    12
-	  SeleniumLibrary.Click element    xpath=//select[@data-testid="set-checkout-customer-detail-birthday-year"]
-	  SeleniumLibrary.Select from list by value    xpath=//select[@data-testid="set-checkout-customer-detail-birthday-year"]    1990
-
-Insert delivery email
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="set-checkout-customer-detail-email"]    ${email}
 
 Generate random email
     ${random_string}   Generate Random String    5    [LETTERS]
     BuiltIn.Set global variable    ${email}    sss.qa12345+${country}_${random_string}@gmail.com
-
-Insert delivery phone
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="set-checkout-customer-detail-phone"]    0152215151515
-
-Accept delivery Terms&Conditions
-    SeleniumLibrary.Click element    xpath=//label[@for="dataProtection"]
 
 Proceed to payment methods
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]/div

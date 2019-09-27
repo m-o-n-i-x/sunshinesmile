@@ -1,12 +1,6 @@
 *** Settings ***
 Resource    Variables.txt
-Library    SeleniumLibrary
-Library    String
-Library    Collections
-Library    DateTime
-Library    OperatingSystem
-#Library         DebugLibrary
-#Library    RequestsLibrary
+Resource    keywords.robot
 
 **Keywords**
 

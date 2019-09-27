@@ -1,6 +1,5 @@
 *** Settings ***
 Resource    keywords.robot
-Resource    keywords_backend.robot
 Suite teardown    Close All Browsers
 
 
@@ -16,7 +15,7 @@ User orders set
     Go to set url
 	  Order set
     Generate random email
-	  Fill delivery address form
+	  Fill set address form
 	  Proceed to payment methods
 	  Choose Lastschrift radio button
 	  Insert Lastschrift data

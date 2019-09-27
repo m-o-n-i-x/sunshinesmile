@@ -1,6 +1,5 @@
 *** Settings ***
 Resource    keywords.robot
-Resource    keywords_backend.robot
 Suite teardown    Close All Browsers
 
 
@@ -16,7 +15,7 @@ Set with Lastschrift
     Go to set url
 	  Order set
     Generate random email
-	  Fill delivery address form
+	  Fill set address form
 	  Proceed to payment methods
 	  Choose Lastschrift radio button
 	  Insert Lastschrift data
@@ -33,7 +32,7 @@ Set with Lastschrift and discount
     Verify set voucher applied
     Order set
     Generate random email
-    Fill delivery address form
+    Fill set address form
     Proceed to payment methods
     Choose Lastschrift radio button
     Insert Lastschrift data
@@ -49,7 +48,7 @@ Set with CC
     Go to set url
     Order set
     Generate random email
-    Fill delivery address form
+    Fill set address form
     Proceed to payment methods
     Choose CC radio button
     Insert CC name
@@ -68,7 +67,7 @@ Set with CC payment and discount
     Verify set voucher applied
     Order set
     Generate random email
-    Fill delivery address form
+    Fill set address form
     Proceed to payment methods
     Choose CC radio button
     Insert CC name
