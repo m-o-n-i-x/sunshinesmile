@@ -36,6 +36,22 @@ Choose customer from main navigation
 Search for appointment
     SeleniumLibrary.input text    css=th:nth-child(5) .form-control    ${email}
 
+Search for 3Shape customer
+    Choose Shop Scan from main navigation
+    SeleniumLibrary.input text    css=th:nth-child(4) .form-control    3Shape
+    SeleniumLibrary.input text    css=th:nth-child(7) .form-control    treatment quotation created whatsapp
+    Sleep    2s
+    ${email}=    SeleniumLibrary.Get Text    xpath=//*[@id="root"]/div/div/div[2]/div[2]/div/div/div/div[2]/table/tbody/tr[1]/td[6]
+    Set Global Variable    ${email}
+
+Search for Onyceph customer
+    Choose Shop Scan from main navigation
+    SeleniumLibrary.input text    css=th:nth-child(4) .form-control    Onyceph
+    SeleniumLibrary.input text    css=th:nth-child(7) .form-control    treatment quotation created whatsapp
+    Sleep    2s
+    ${email}=    SeleniumLibrary.Get Text    xpath=//*[@id="root"]/div/div/div[2]/div[2]/div/div/div/div[2]/table/tbody/tr[1]/td[6]
+    Set Global Variable    ${email}
+
 Enter details of chosen appointment
     SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
 

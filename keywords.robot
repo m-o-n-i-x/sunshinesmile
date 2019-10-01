@@ -2,6 +2,8 @@
 Resource    Variables.txt
 Resource    keywords_set.robot
 Resource    keywords_backend.robot
+Resource    ScreenshotPatternCreation/keywords.robot
+Resource    ScreenshotElementComparison/keywords.robot
 Library    SeleniumLibrary    30
 Library    String
 Library    Collections
