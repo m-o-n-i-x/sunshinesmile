@@ -172,6 +172,7 @@ Choose valid until date
     ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
     SeleniumLibrary.Input text    xpath=(//div[@class="react-datepicker__input-container"])[2]/input    ${validity_date}
     SeleniumLibrary.Set focus to element    name=numberOfAligner
+    Treatment quotation created intermediate
     Sleep    3s
 
 Choose valid until date set
@@ -231,7 +232,7 @@ Rate pay allowed
     SeleniumLibrary.Click element    css=.col-md-6:nth-child(2) > .react-form-checkbox input
     Sleep    3s
     SeleniumLibrary.Set focus to element    name=treatmentDuration
-    Sleep    1s
+    Sleep    2s
 
 Purchase checkbox visible
     ${purchase_visible}    Run keyword and return status   SeleniumLibrary.element text should not be visible     css=.row:nth-child(2) .label-col    Purchased
@@ -243,13 +244,17 @@ Allow customer to purchase
     Run keyword if    '${purchase_visible}' == 'True'    SeleniumLibrary.Click element    css=.col-md-6:nth-child(1) > .react-form-checkbox input
     Sleep    3s
     SeleniumLibrary.Set focus to element    name=treatmentDuration
-    Sleep    1s
+    Sleep    2s
 
 Treatment quotation created
     SeleniumLibrary.Click element    xpath=//button[contains(.,'treatment quotation created')]
     SeleniumLibrary.Wait until element is not visible    xpath=//button[contains(.,'treatment quotation created')]
     SeleniumLibrary.Wait until element is visible    xpath=//button[contains(.,'treatment sold')]
     Sleep    10s
+
+Treatment quotation created intermediate
+    SeleniumLibrary.Click element    xpath=//button[contains(.,'treatment quotation created')]
+    Sleep    3s   
 
 Remember customer id
     ${current_location}    SeleniumLibrary.Log Location
