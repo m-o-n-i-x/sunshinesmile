@@ -17,40 +17,30 @@ Log in to back-end admin
 
 Choose Sets from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Sets')]
+    Sleep    2s
 
 Choose Check-in from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Clinic Check-In')]
+    Sleep    2s
 
 Choose Appointment from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Appointment')]
+    Sleep    2s
 
 Choose Clinic 3D-Scan from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Clinic 3D-Scan')]
+    Sleep    2s
 
 Choose Shop Scan from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Shop Scan')]
+        Sleep    2s
 
 Choose customer from main navigation
     SeleniumLibrary.Click element    xpath=//span[contains(.,'Customer')]
+    Sleep    2s
 
 Search for appointment
     SeleniumLibrary.input text    css=th:nth-child(5) .form-control    ${email}
-
-Search for 3Shape customer
-    Choose Shop Scan from main navigation
-    SeleniumLibrary.input text    css=th:nth-child(4) .form-control    3Shape
-    SeleniumLibrary.input text    css=th:nth-child(7) .form-control    treatment quotation created whatsapp
-    Sleep    2s
-    ${email}=    SeleniumLibrary.Get Text    xpath=//*[@id="root"]/div/div/div[2]/div[2]/div/div/div/div[2]/table/tbody/tr[1]/td[6]
-    Set Global Variable    ${email}
-
-Search for Onyceph customer
-    Choose Shop Scan from main navigation
-    SeleniumLibrary.input text    css=th:nth-child(4) .form-control    Onyceph
-    SeleniumLibrary.input text    css=th:nth-child(7) .form-control    treatment quotation created whatsapp
-    Sleep    2s
-    ${email}=    SeleniumLibrary.Get Text    xpath=//*[@id="root"]/div/div/div[2]/div[2]/div/div/div/div[2]/table/tbody/tr[1]/td[6]
-    Set Global Variable    ${email}
 
 Enter details of chosen appointment
     SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
@@ -184,11 +174,9 @@ Create treatment quotation
     Sleep    5s
 
 Choose valid until date
-    Run keyword and ignore error    Close treatment quotation preview
     ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
     SeleniumLibrary.Input text    xpath=(//div[@class="react-datepicker__input-container"])[2]/input    ${validity_date}
     SeleniumLibrary.Set focus to element    name=numberOfAligner
-    Treatment quotation created intermediate
     Sleep    3s
 
 Choose valid until date set
@@ -236,13 +224,16 @@ Insert number of aligner upper jaw
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Insert treatment link
-    :FOR    ${i}   IN RANGE    100
-    \    SeleniumLibrary.Input text     name=treatmentLink    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
-    \    SeleniumLibrary.Set focus to element    xpath=//div[@class="content-box-header"]/h1
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
     Sleep    3s
     SeleniumLibrary.Set focus to element    name=treatmentDuration
+    Sleep    2s
+
+Verify treatment link saved
+    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
+    Run keyword if    '${status}' == 'False'    SeleniumLibrary.Input text     name=treatmentLink    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
+    Run keyword if    '${status}' == 'False'    Allow customer to purchase
+    Run keyword if    '${status}' == 'False'    Rate pay allowed
 
 Rate pay allowed
     SeleniumLibrary.Click element    css=.col-md-6:nth-child(2) > .react-form-checkbox input
@@ -266,11 +257,11 @@ Treatment quotation created
     SeleniumLibrary.Click element    xpath=//button[contains(.,'treatment quotation created')]
     SeleniumLibrary.Wait until element is not visible    xpath=//button[contains(.,'treatment quotation created')]
     SeleniumLibrary.Wait until element is visible    xpath=//button[contains(.,'treatment sold')]
-    Sleep    10s
+    Sleep    5s
 
 Treatment quotation created intermediate
     SeleniumLibrary.Click element    xpath=//button[contains(.,'treatment quotation created')]
-    Sleep    3s   
+    Sleep    3s
 
 Remember customer id
     ${current_location}    SeleniumLibrary.Log Location
@@ -374,6 +365,7 @@ Create treatment plan
 
 Choose order for given user
     SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
+    Sleep    3s
 
 Check id
     SeleniumLibrary.Click link    link=check id
@@ -422,7 +414,7 @@ Unfold pretreatment reason
     SeleniumLibrary.Click element    css=.content-box-body > .row > .col-md-6:nth-child(1) .form-control
 
 Select pretreatment reason
-    SeleniumLibrary.Select from list by label    css=.content-box-body > .row > .col-md-6:nth-child(1) .form-control    Parodontosis
+    SeleniumLibrary.Select from list by label    css=.content-box-body > .row:nth-child(2) > .col-md-6:nth-child(1) > div > .form-control    Parodontosis
 
 Fill IPR instructions
     SeleniumLibrary.Click element    css=div:nth-child(2) > .teeth-in-between-item:nth-child(8) > .form-control
@@ -432,14 +424,19 @@ Upload Onyceph files
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step1.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step2.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step3.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step4.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step5.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\Onyceph\\Step6.obj
     Sleep    5s
 
@@ -447,14 +444,19 @@ Upload 3Shape files
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup1.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup2.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup3.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup4.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup5.obj
     Sleep    5s
+    SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup6.obj
     Sleep    5s
 

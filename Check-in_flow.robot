@@ -73,6 +73,7 @@ SSS order
     Beam to 'Treatment plan ok for physician' state
     Create treatment quotation
     Choose valid until date
+    Treatment quotation created intermediate
     Insert treatment link
     Allow customer to purchase
     Rate pay allowed
@@ -80,6 +81,7 @@ SSS order
     Choose customer from main navigation
     Choose order for given user
     Remember customer id
+    Verify treatment link saved
 
 User creates account
     [tags]    de    ch    uk    at

@@ -78,6 +78,7 @@ External
     Choose customer from main navigation
     Choose order for given user
     Remember customer id
+    Verify treatment link saved
 
 User creates account
     [tags]    de    ch    uk    at

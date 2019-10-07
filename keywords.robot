@@ -2,8 +2,6 @@
 Resource    Variables.txt
 Resource    keywords_set.robot
 Resource    keywords_backend.robot
-Resource    ScreenshotPatternCreation/keywords.robot
-Resource    ScreenshotElementComparison/keywords.robot
 Library    SeleniumLibrary    30
 Library    String
 Library    Collections
@@ -289,7 +287,7 @@ Create account
     Sleep    5s
 
 User redirected to treatment plan after log in
-    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#treatment_plan
+    BuiltIn.Run keyword if    '${country}' == 'de' or '${country}' == 'ch'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#treatment_plan
     BuiltIn.Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#treatment_plan
     SeleniumLibrary.Element should be visible    xpath=//div[contains(@class, "TreatmentDetailV2")]
 
@@ -367,12 +365,12 @@ Purchase treatment rate payment
 
 Verify treatment purchase success
     Sleep    3s
-    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#order_confirmation
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#order_confirmation
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#order_confirmation
 
 Verify retainer purchase success
     Sleep    3s
-    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#order_overview
+    SeleniumLibrary.Location should be    ${site_url}account/checkout-retainer#order_overview
     SeleniumLibrary.Page should contain     Ihre Bestellung ist bei uns eingegangen
 
 Open secondary browser
@@ -410,31 +408,31 @@ Buy retainer
 
 Verify voucher code page shown
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#voucher_code
-    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#voucher_code
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#voucher_code
 
 Verify retainer voucher code page shown
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-retainer#voucher_code
-    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#voucher_code
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-retainer#voucher_code
 
 Verify payment rate or one time shown
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#payment_rate_or_one_time
-    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#payment_rate_or_one_time
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#payment_rate_or_one_time
 
 Verify payment page shown
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#payment_one_time
-    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#payment_one_time
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#payment_one_time
 
 Verify retainer payment page shown
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-retainer#payment
-    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#payment
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-retainer#payment
 
 Verify treatment overview page shown
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#order_overview
-    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-treatment#order_overview
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-treatment#order_overview
 
 Verify retainer overview page shown
     Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}accoount/checkout-retainer#order_overview
-    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}mein-sunshine/checkout-retainer#order_overview
+    Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    ${site_url}account/checkout-retainer#order_overview
 
 Verify light treatment
     SeleniumLibrary.Element text should be    xpath=//div[@class="Subline-chxvop-0 TreatmentDetailV2__Subline-o0n5uo-0 TreatmentDetailV2__SublineBlue-o0n5uo-8 TreatmentDetailV2__SublineBlueBold-o0n5uo-9 cgXdCV"]    Leicht
