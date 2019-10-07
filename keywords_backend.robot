@@ -224,14 +224,30 @@ Insert number of aligner upper jaw
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Insert treatment link
+    :FOR    ${i}   IN RANGE    100
+    \    SeleniumLibrary.Set focus to element    name=treatmentLink
+    \    SeleniumLibrary.Input text     name=treatmentLink    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
+    \    Sleep    1s
+    \    SeleniumLibrary.Set focus to element    name=treatmentDuration
+    \    Sleep    1s
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
-    Sleep    3s
-    SeleniumLibrary.Set focus to element    name=treatmentDuration
-    Sleep    2s
+    Sleep    1s
+    Remember treatment link
+
+Remember treatment link
+    ${treatment_link}    SeleniumLibrary.Get element attribute    name=treatmentLink    value
+    BuiltIn.Set global variable    ${treatment_link}
 
 Verify treatment link saved
-    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
+    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    ${treatment_link}
     Run keyword if    '${status}' == 'False'    SeleniumLibrary.Input text     name=treatmentLink    https://dentadynamics.com/ctmviewer/?src=d50515d0-8b6c-11e9-b89b-8d7e61147b7b
+    Run keyword if    '${status}' == 'False'    Allow customer to purchase
+    Run keyword if    '${status}' == 'False'    Rate pay allowed
+
+Verify pdf link saved
+    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentLink    value    ${treatment_link}
+    Run keyword if    '${status}' == 'False'    Upload PDF
     Run keyword if    '${status}' == 'False'    Allow customer to purchase
     Run keyword if    '${status}' == 'False'    Rate pay allowed
 
@@ -464,6 +480,7 @@ Upload PDF
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a video')]
     Choose File    xpath=(//input[@type='file'])[1]    ${CURDIR}${/}visualization\\view-video-file.pdf
     Sleep    8s
+    Remember treatment link
 
 Verify Onyceph files uploaded
     SeleniumLibrary.Element text should be    xpath=//table[@class="default-table"]/tbody/tr[1]/td[1]    Step1.obj
