@@ -2,6 +2,8 @@
 Resource    Variables.txt
 Resource    keywords_set.robot
 Resource    keywords_backend.robot
+Resource    ScreenshotPatternCreation/keywords.robot
+Resource    ScreenshotElementComparison/keywords.robot
 Library    SeleniumLibrary    30
 Library    String
 Library    Collections
@@ -274,10 +276,10 @@ Go to account creation page
     Go to    ${site_url}/account/create?customerId=${customer_id}&email=${email}
 
 Set account password
-    SeleniumLibrary.Input text    name=password-create-account    Sunshine123#
+    SeleniumLibrary.Input text    name=password-create-account    ${qa_backend_password}
 
 Set account repeat password
-    SeleniumLibrary.Input text    name=password-repeat-create-account    Sunshine123#
+    SeleniumLibrary.Input text    name=password-repeat-create-account    ${qa_backend_password}
 
 Create account
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]/div

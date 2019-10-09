@@ -16,7 +16,7 @@ Create 3Shape Screenshot
     Open SSS website
     Open login page
     SeleniumLibrary.Input text    name=email-login    ${email}
-    SeleniumLibrary.Input text    name=password-login    Sunshine123#
+    SeleniumLibrary.Input text    name=password-login    ${qa_backend_password}
     Login
     Make Desktop 3Shape TopNavigation Test Screenshot
     Make Desktop 3Shape LeftNavigation Test Screenshot
@@ -38,7 +38,7 @@ Create Onyceph Screenshot Pattern
     Open SSS website
     Open login page
     SeleniumLibrary.Input text    name=email-login    ${email}
-    SeleniumLibrary.Input text    name=password-login    Sunshine123#
+    SeleniumLibrary.Input text    name=password-login    ${qa_backend_password}
     Login
     Make Desktop Onyceph TopNavigation Test Screenshot
     Make Desktop Onyceph LeftNavigation Test Screenshot

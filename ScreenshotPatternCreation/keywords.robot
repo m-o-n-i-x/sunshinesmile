@@ -91,7 +91,7 @@ Make Mobile 3Shape TopNavigation Reference Screenshot
     Set Window Size    375    950
     Reload Page
     Sleep    2s
-    Execute Javascript    document.getElementsByClassName('Headline-iv4yf7-0 TreatmentPlanV2__HeadlineBlueBoldLeft-r1bz9m-1 glGpZe')[1].scrollIntoView()
+    Execute Javascript    document.getElementsByClassName('OnlyOnMobile-sc-5j0arx-0 ceCnQi')[0].scrollIntoView()
     Select Frame    xpath=//*[@title="Behandlungsvorschlag"]
     SeleniumLibrary.Click element    id=blink
     SeleniumLibrary.Click element    id=moveButtonTop
@@ -194,7 +194,7 @@ Make Mobile Onyceph TopNavigation Reference Screenshot
     Set Window Size    375    950
     Reload Page
     Sleep    2s
-    Execute Javascript    document.getElementsByClassName('Headline-iv4yf7-0 TreatmentPlanV2__HeadlineBlueBoldLeft-r1bz9m-1 glGpZe')[1].scrollIntoView()
+    Execute Javascript    document.getElementsByClassName('OnlyOnMobile-sc-5j0arx-0 ceCnQi')[0].scrollIntoView()
     Select Frame    xpath=//*[@title="Behandlungsvorschlag"]
     SeleniumLibrary.Click element    id=blink
     SeleniumLibrary.Click element    id=moveButtonTop
