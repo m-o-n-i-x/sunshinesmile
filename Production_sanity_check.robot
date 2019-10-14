@@ -100,4 +100,4 @@ User creates account
     Set account repeat password
     Create account
     Run keyword unless    '${country}' == 'uk'    SeleniumLibrary.Location should be    https://plusdental.${country}/account
-    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    https://plusdent.${country}/account
+    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    https://plusdent.co.uk/account
