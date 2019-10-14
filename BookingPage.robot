@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    keywords_booking.robot
+Resource    keywords.robot
 Suite teardown    Close All Browsers
 
 
@@ -27,3 +27,4 @@ Move to next week of appointments
     Next week pattern
     Remember current week
     Verify movement to next week
+    

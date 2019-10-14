@@ -8,6 +8,7 @@ Go to back-end admin
     Run keyword if    '${env}' == 'staging'    SeleniumLibrary.Go to    https://admin.sunshine-test-env.de/
     Run keyword if    '${env}' == 'qa1'    SeleniumLibrary.Go to    https://pe-qa1.sunshine-test-env.de/
     Run keyword if    '${env}' == 'qa2'    SeleniumLibrary.Go to    https://pe-qa2.sunshine-test-env.de/
+    Run keyword if    '${env}' == 'production'    SeleniumLibrary.Go to    https://admin.sunshinesmile.de/
 
 Log in to back-end admin
     SeleniumLibrary.Input text    name=email    ${backend_email}
@@ -65,8 +66,14 @@ Change appointment
     SeleniumLibrary.Wait until element is visible    xpath=//a[contains(text(),'Change Appointment')]
     ${appointment_url}    SeleniumLibrary.Get element attribute    xpath=//a[contains(text(),'Change Appointment')]    href
     BuiltIn.Set global variable    ${appointment_url}
+    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    Set plsudent    
+    BuiltIn.Set global variable    ${appointment_url}
     SeleniumLibrary.Click link    link=Change Appointment
     Sleep    3s
+
+Set plsudent
+    ${appointment_url}    String.Replace string    ${appointment_url}    plusdental    plusdent
+    BuiltIn.Set global variable    ${appointment_url}
 
 Choose set order for given user
     SeleniumLibrary.Click element    xpath=//td[contains(.,'${email}')]
@@ -332,7 +339,7 @@ Set at street
 
 Set ch street
     BuiltIn.Set global variable    ${street}    Bahnhofstrasse 42
-	
+
 Insert valid street
     Set street
     :FOR    ${i}   IN RANGE    100
@@ -343,7 +350,7 @@ Insert valid street
     \    SeleniumLibrary.Set focus to element    name=zip
     \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=streetAddress    value    ${street}
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
-	
+
 Set zip code
     Run keyword if    '${country}' == 'de'    Set de zip
     Run keyword if    '${country}' == 'ch'    Set ch zip
@@ -515,7 +522,7 @@ Upload PDF
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a video')]
     Choose File    xpath=(//input[@type='file'])[1]    ${CURDIR}${/}visualization\\view-video-file-new.pdf
     Sleep    8s
-    Remember treatment link	
+    Remember treatment link
 
 Verify Onyceph files uploaded
     SeleniumLibrary.Element text should be    xpath=//table[@class="default-table"]/tbody/tr[1]/td[1]    Step1.obj
@@ -552,3 +559,13 @@ Go to visualization page
 
 Close treatment quotation preview
     SeleniumLibrary.Click element    xpath=//button[contains(.,'x')]
+
+Set appointment to test
+    SeleniumLibrary.Click element    css=.col-md-6:nth-child(2) > div > .form-control
+    SeleniumLibrary.Select from list by label    css=.col-md-6:nth-child(2) > div > .form-control    test
+
+Verify appointment canceled
+    SeleniumLibrary.Element Attribute Value Should Be    name=status    value    canceled
+
+Verify appointment changed
+    SeleniumLibrary.Element Attribute Value Should Be    name=status    value    changed

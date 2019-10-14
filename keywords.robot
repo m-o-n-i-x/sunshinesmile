@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    Variables.txt
+Resource    keywords_booking.robot
 Resource    keywords_set.robot
 Resource    keywords_backend.robot
 Resource    ScreenshotPatternCreation/keywords.robot
@@ -10,7 +11,7 @@ Library    Collections
 Library    DateTime
 Library    OperatingSystem
 Library    RequestsLibrary
-#Library         DebugLibrary
+#Library    DebugLibrary
 #Library    HttpLibrary
 #Library    JsonValidator
 #Library    jsonschema
@@ -174,9 +175,14 @@ Verify appointment success
     SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="booking-success-confirm-button"]
     SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="booking-success-confirm-button"]
-    Run keyword if    '${country}' == 'de'    SeleniumLibrary.Location should be    https://sunshine-test-env.de/booking/3d-scan/berlin-mitte/success
-    Run keyword if    '${country}' == 'uk'    SeleniumLibrary.Location should be    https://sunshine-test-env.co.uk/booking/3d-scan/london-central/success
-    Run keyword if    '${country}' == 'ch'    SeleniumLibrary.Location should be    https://sunshine-test-env.ch/booking/3d-scan/bern/success
+    Run keyword if    '${country}' == 'de' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://sunshine-test-env.de/booking/3d-scan/berlin-mitte/success
+    Run keyword if    '${country}' == 'uk' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://sunshine-test-env.co.uk/booking/3d-scan/london-central/success
+    Run keyword if    '${country}' == 'ch' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://sunshine-test-env.ch/booking/3d-scan/bern/success
+    Run keyword if    '${country}' == 'at' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://sunshine-test-env.at/booking/3d-scan/wien-1-bezirk/success
+    Run keyword if    '${country}' == 'de' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plusdental.de/booking/3d-scan/berlin-mitte/success
+    Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plusdent.co.uk/booking/3d-scan/london-central/success
+    Run keyword if    '${country}' == 'ch' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plusdental.ch/booking/3d-scan/bern/success
+    Run keyword if    '${country}' == 'at' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plusdental.at/booking/3d-scan/wien-1-bezirk/success
 
 Verify logout success
     SeleniumLibrary.Location should be    https://sunshine-test-env.de
