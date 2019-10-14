@@ -51,7 +51,7 @@ External
     Beam order to 'Ready for physician assignment' state
     Assign physician
     Choose physician
-    Choose SunshineSmile supplier
+    Choose HAT supplier
     Physician assigned
     Choose Shop Scan from main navigation
     Choose order for given user

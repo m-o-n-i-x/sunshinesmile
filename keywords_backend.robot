@@ -315,16 +315,35 @@ Insert valid address
     Insert valid zip
     Insert valid city
 
+Set street
+    Run keyword if    '${country}' == 'de'    Set de street
+    Run keyword if    '${country}' == 'ch'    Set ch street
+    Run keyword if    '${country}' == 'uk'    Set uk street
+    Run keyword if    '${country}' == 'at'    Set at street
+
+Set de street
+    BuiltIn.Set global variable    ${street}    Badensche Str. 52
+
+Set uk street
+    BuiltIn.Set global variable    ${street}    90 Cromer St
+
+Set at street
+    BuiltIn.Set global variable    ${street}    Vordere Zollamtsstraße 5
+
+Set ch street
+    BuiltIn.Set global variable    ${street}    Bahnhofstrasse 42
+	
 Insert valid street
+    Set street
     :FOR    ${i}   IN RANGE    100
     \    SeleniumLibrary.Set focus to element    name=streetAddress
     \    Sleep    1s
-    \    SeleniumLibrary.Input text     name=streetAddress    Badensche Str. 52
+    \    SeleniumLibrary.Input text     name=streetAddress    ${street}
     \    Sleep    1s
     \    SeleniumLibrary.Set focus to element    name=zip
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=streetAddress    value    Badensche Str. 52
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=streetAddress    value    ${street}
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
-
+	
 Set zip code
     Run keyword if    '${country}' == 'de'    Set de zip
     Run keyword if    '${country}' == 'ch'    Set ch zip
@@ -335,13 +354,13 @@ Set de zip
     BuiltIn.Set global variable    ${zip_code}    10825
 
 Set ch zip
-    BuiltIn.Set global variable    ${zip_code}    3013
+    BuiltIn.Set global variable    ${zip_code}    8001
 
 Set uk zip
-    BuiltIn.Set global variable    ${zip_code}    10825
+    BuiltIn.Set global variable    ${zip_code}    WC1H 8DD
 
 Set at zip
-    BuiltIn.Set global variable    ${zip_code}    1010
+    BuiltIn.Set global variable    ${zip_code}    1030
 
 Insert valid zip
     Set zip code
@@ -494,9 +513,9 @@ Upload 3Shape files
 
 Upload PDF
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a video')]
-    Choose File    xpath=(//input[@type='file'])[1]    ${CURDIR}${/}visualization\\view-video-file.pdf
+    Choose File    xpath=(//input[@type='file'])[1]    ${CURDIR}${/}visualization\\view-video-file-new.pdf
     Sleep    8s
-    Remember treatment link
+    Remember treatment link	
 
 Verify Onyceph files uploaded
     SeleniumLibrary.Element text should be    xpath=//table[@class="default-table"]/tbody/tr[1]/td[1]    Step1.obj
