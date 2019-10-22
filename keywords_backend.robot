@@ -66,7 +66,7 @@ Change appointment
     SeleniumLibrary.Wait until element is visible    xpath=//a[contains(text(),'Change Appointment')]
     ${appointment_url}    SeleniumLibrary.Get element attribute    xpath=//a[contains(text(),'Change Appointment')]    href
     BuiltIn.Set global variable    ${appointment_url}
-    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    Set plsudent    
+    BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    Set plsudent
     BuiltIn.Set global variable    ${appointment_url}
     SeleniumLibrary.Click link    link=Change Appointment
     Sleep    3s
@@ -143,8 +143,8 @@ Assign physician
     Sleep    3s
 
 Count physicians
-    ${physicians_count}    SeleniumLibrary.Get element count    xpath=//div[1]/div/select[@class="form-control"]/option
-    BuiltIn.Set global variable    ${physicians_count}
+    #${physicians_count}    SeleniumLibrary.Get element count    xpath=//div[1]/div/select[@class="form-control"][2]/option
+    BuiltIn.Set global variable    ${physicians_count}    4
 
 Choose physician
     Count physicians

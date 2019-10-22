@@ -11,12 +11,12 @@ Library    Collections
 Library    DateTime
 Library    OperatingSystem
 Library    RequestsLibrary
+Library    scipy
 #Library    DebugLibrary
 #Library    HttpLibrary
 #Library    JsonValidator
 #Library    jsonschema
 #Library    JSONSchemaLibrary schemas
-
 
 
 **Keywords**
@@ -38,6 +38,7 @@ Open SSS website
     #SeleniumLibrary.Maximize Browser Window
     SeleniumLibrary.Set Window Size    1920         1800
     BuiltIn.Set global variable    ${default_browser}
+    BuiltIn.Run keyword and ignore error    SeleniumLibrary.Click element     css=.Modal__CloseButtonWrapper-sc-1bx8wzc-1 svg
 
 Choose location
     SeleniumLibrary.Click element    xpath=//a[@href="/location"]
@@ -481,9 +482,9 @@ Verify email already in use
     SeleniumLibrary.Element text should be    xpath=//div[@data-testid="error-message-email"]    Diese E-Mail ist bereits in Benutzung
 
 Remember chosen rate option
-    ${months}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(3) .kXSBcv
+    ${months}    SeleniumLibrary.Get text    //*[@id="__next"]/div/div[3]/div/div/div[2]/div/div[1]/div/div/div/div[2]/div/div[3]/div/div[3]
     BuiltIn.Set global variable    ${months}
-    ${amount}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(3) .kDPWyI
+    ${amount}    SeleniumLibrary.Get text    //*[@id="__next"]/div/div[3]/div/div/div[2]/div/div[1]/div/div/div/div[2]/div/div[3]/div/div[4]
     BuiltIn.Set global variable    ${amount}
 
 Remember rate details in checkout overview
