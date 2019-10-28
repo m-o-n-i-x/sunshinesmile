@@ -55,3 +55,14 @@ Set days in month
     BuiltIn.Run keyword if    '${current_month}' == '4' or '${current_month}' == '6' or '${current_month}' == '9' or '${current_month}' == '11'    BuiltIn.Set global variable    ${days_in_month}    30
     ${days_in_month}    BuiltIn.convert to integer    ${days_in_month}
     BuiltIn.Set global variable    ${days_in_month}
+
+Add filled form parameter to location url
+    SeleniumLibrary.Go to    ${site_url}location?email=sss.qa12345%2Bform_filled%40gmail.com&first-name=qa&last-name=test&phone=01511554411&salutation=Frau&zipCode=10589
+    Sleep    3s
+
+Verify form prefilled with customer data
+    SeleniumLibrary.Element attribute value should be    name=first-name    value    qa
+    SeleniumLibrary.Element attribute value should be    name=last-name    value    test
+    SeleniumLibrary.Element attribute value should be    name=email    value    sss.qa12345+form_filled@gmail.com
+    SeleniumLibrary.Element attribute value should be    name=phone    value    01511554411
+    SeleniumLibrary.Element attribute value should be    xpath=//input[@data-testid="booking-form-salutation-f"]    checked    true

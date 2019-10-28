@@ -85,6 +85,7 @@ Click view link in process overview section
 
 Click Clinic 3D-Scan in process overview section
     SeleniumLibrary.Click link    link=Clinic 3D-Scan
+    Sleep    3s
 
 Beam order to 'Ready for physician assignment' state
     Unfold states list

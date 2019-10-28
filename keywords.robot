@@ -12,6 +12,7 @@ Library    DateTime
 Library    OperatingSystem
 Library    RequestsLibrary
 Library    scipy
+#Library  	 AppiumLibrary	   30
 #Library    DebugLibrary
 #Library    HttpLibrary
 #Library    JsonValidator
@@ -172,7 +173,7 @@ Book rescheduled appointment
     Sleep    3s
 
 Verify appointment success
-    Sleep    3s
+    Sleep    5s
     SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="booking-success-confirm-button"]
     SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="booking-success-confirm-button"]
@@ -330,6 +331,7 @@ Create customer
 Reschedule appointment from interface
     SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-reschedule"]
     SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-reschedule"]
+    Sleep    5s
 
 Cancel appointment from interface
     SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-cancel"]
