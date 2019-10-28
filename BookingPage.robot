@@ -29,9 +29,20 @@ Move to next week of appointments
     Verify movement to next week
 
 Booking form filled
-    [tags]    de    ch    uk    at
+    [tags]    de
     Go to website
     Choose location
     Add filled form parameter to location url
     Choose random available time
     Verify form prefilled with customer data
+
+Postal code as parameter
+    [tags]    de
+    Go to website
+    BuiltIn.Set suite variable    ${zipcode}    44135
+    Add zipCode parameter to location url
+    Verify Dortmund location
+    Go to website
+    BuiltIn.Set suite variable    ${zipcode}    11111
+    Add zipCode parameter to location url
+    Verify all locations shown

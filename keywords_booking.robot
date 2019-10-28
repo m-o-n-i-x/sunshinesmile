@@ -60,9 +60,22 @@ Add filled form parameter to location url
     SeleniumLibrary.Go to    ${site_url}location?email=sss.qa12345%2Bform_filled%40gmail.com&first-name=qa&last-name=test&phone=01511554411&salutation=Frau&zipCode=10589
     Sleep    3s
 
+Add zipCode parameter to location url
+    SeleniumLibrary.Go to    ${site_url}location?zipCode=${zipcode}
+    Sleep    3s
+
 Verify form prefilled with customer data
     SeleniumLibrary.Element attribute value should be    name=first-name    value    qa
     SeleniumLibrary.Element attribute value should be    name=last-name    value    test
     SeleniumLibrary.Element attribute value should be    name=email    value    sss.qa12345+form_filled@gmail.com
     SeleniumLibrary.Element attribute value should be    name=phone    value    01511554411
     SeleniumLibrary.Element attribute value should be    xpath=//input[@data-testid="booking-form-salutation-f"]    checked    true
+
+Verify Dortmund location
+    SeleniumLibrary.Element text should be    xpath=//h4[contains(@class, "sc-bdVaJa sc-jTzLTM eCMmlJ")]    Dortmund
+    ${current_location}    SeleniumLibrary.Get location
+    BuiltIn.Should contain    ${current_location}    dortmund
+
+Verify all locations shown
+    SeleniumLibrary.Page should contain element    xpath=//div[contains(@class, "LocationBasic__LocationByCountryDiv-sc-144e4xo-1")]
+    SeleniumLibrary.Location should be    ${site_url}location?zipCode=11111
