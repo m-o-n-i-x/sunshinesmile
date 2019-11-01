@@ -198,13 +198,13 @@ Create treatment quotation
     Sleep    5s
 
 Choose valid until date
-    ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
+    ${validity_date}    DateTime.Get current date    UTC    +50 days    result_format=%d.%m.%Y
     SeleniumLibrary.Input text    xpath=(//div[@class="react-datepicker__input-container"])[2]/input    ${validity_date}
     SeleniumLibrary.Set focus to element    name=numberOfAligner
     Sleep    3s
 
 Choose valid until date set
-    ${validity_date}    DateTime.Get current date    UTC    +5 days    result_format=%d.%m.%Y
+    ${validity_date}    DateTime.Get current date    UTC    +50 days    result_format=%d.%m.%Y
     SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
     #SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Reload page

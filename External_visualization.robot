@@ -11,7 +11,7 @@ Precondition
 
 User makes an appointment
     [tags]    de    ch    uk    at
-    Set global variable    ${first}    External
+    Set global variable    ${first}    HAT
     Set global variable    ${last}    Visualization
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location

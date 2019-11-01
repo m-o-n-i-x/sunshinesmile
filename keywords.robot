@@ -282,6 +282,7 @@ Verify set order success
 
 Go to account creation page
     Go to    ${site_url}/account/create?customerId=${customer_id}&email=${email}
+    BuiltIn.Run keyword and ignore error    SeleniumLibrary.Click element     css=.Modal__CloseButtonWrapper-sc-1bx8wzc-1 svg
 
 Set account password
     SeleniumLibrary.Input text    name=password-create-account    ${qa_backend_password}
