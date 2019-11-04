@@ -79,7 +79,7 @@ IPR light
     Verify treatment link saved
 
 User creates account
-    [tags]    de    ch    uk
+    [tags]    de
     ${email}    String.Replace string    ${email}    +    %2B
     BuiltIn.Set test variable    ${email}
     Go to account creation page
@@ -87,3 +87,11 @@ User creates account
     Set account repeat password
     Create account
     User redirected to treatment plan after log in
+
+Validate checkout information
+    [tags]    de
+    Verify checkout medium treatment
+    Verify checkout upper jaw
+    Verify checkout lower jaw
+    Verify checkout duration
+    Verify ipr needed

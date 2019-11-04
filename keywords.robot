@@ -499,3 +499,18 @@ Remember rate details in checkout overview
 Verify rate details in checkout overview
     BuiltIn.Should contain    ${months}    ${months_checkout_overview}
     BuiltIn.Should contain    ${amount}    ${amount_checkout_overview}
+
+Verify checkout medium treatment
+    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[1]/p[2]    Medium
+
+Verify checkout upper jaw
+    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[2]/div/p    ${upper_jaw}
+
+Verify checkout lower jaw
+    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[3]/div/p    ${lower_jaw}
+
+Verify checkout duration
+    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[4]/div/p    40 Wochen
+
+Verify ipr needed
+    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[6]/div/p[1]    ASR

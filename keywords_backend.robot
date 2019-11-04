@@ -208,7 +208,7 @@ Choose valid until date set
     SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
     #SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Reload page
-    Sleep    3s
+    Sleep    3s  
 
 Insert treatment duration
     :FOR    ${i}   IN RANGE    100
