@@ -22,7 +22,7 @@ User makes an appointment
     Fill appointment form
     Book appointment
 
-External
+HAT backend
     [tags]    de    ch    uk    at
     Go to back-end admin
     Log in to back-end admin

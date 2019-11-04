@@ -3,6 +3,7 @@ Resource    Variables.txt
 Resource    keywords_booking.robot
 Resource    keywords_set.robot
 Resource    keywords_backend.robot
+Resource    keyword_footer.robot
 Resource    ScreenshotPatternCreation/keywords.robot
 Resource    ScreenshotElementComparison/keywords.robot
 Library    SeleniumLibrary    30
@@ -513,4 +514,4 @@ Verify checkout duration
     SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[4]/div/p    40 Wochen
 
 Verify ipr needed
-    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[6]/div/p[1]    ASR
+    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[6]/div/div/p    ASR
