@@ -3,7 +3,7 @@ Resource    Variables.txt
 Resource    keywords_booking.robot
 Resource    keywords_set.robot
 Resource    keywords_backend.robot
-Resource    keyword_footer.robot
+Resource    keywords_footer.robot
 Resource    ScreenshotPatternCreation/keywords.robot
 Resource    ScreenshotElementComparison/keywords.robot
 Library    SeleniumLibrary    30
@@ -36,14 +36,17 @@ Set site url
 Open SSS website
     Set site url
     ${default_browser}    SeleniumLibrary.Open Browser    ${site_url}    ${browser}
-    Sleep    3s
+    Sleep    10s
     #SeleniumLibrary.Maximize Browser Window
-    SeleniumLibrary.Set Window Size    1920         1800
+    SeleniumLibrary.Set Window Size    1920         2100
     BuiltIn.Set global variable    ${default_browser}
     BuiltIn.Run keyword and ignore error    SeleniumLibrary.Click element     css=.Modal__CloseButtonWrapper-sc-1bx8wzc-1 svg
+    BuiltIn.Run keyword and ignore error   Close GeoIP modal
 
 Choose location
     SeleniumLibrary.Click element    xpath=//a[@href="/location"]
+    Sleep    3s
+    BuiltIn.Run keyword and ignore error    SeleniumLibrary.Click element     css=.Modal__CloseButtonWrapper-sc-1bx8wzc-1 svg
 
 Choose Berlin location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-berlin-mitte"]/div/p
@@ -61,14 +64,13 @@ Choose Wien location
 
 Choose random available time
     Count available times
-    ${random_time}    Evaluate    random.randint(1, ${available_times_count})    modules=random
-    SeleniumLibrary.Click element    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"][${random_time}]
-    #${chosen_time_slot}    SeleniumLibrary.Get text    css=.Grid__Container-sc-168em1b-1:nth-child(${random_time}) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
-    ${chosen_time_slot}    SeleniumLibrary.Get text    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"][${random_time}]
+    ${random_time}    Evaluate    random.randint(0, ${available_times_count})    modules=random
+    SeleniumLibrary.Click element    xpath=//div[@data-testid="booking-slot-${random_time}"]
+    Sleep    3s
+    ${chosen_time_slot}    SeleniumLibrary.Get text    xpath=//div[@data-testid="booking-slot-${random_time}"]
     BuiltIn.Set global variable    ${chosen_time_slot}
 
 Get time slot
-    #${time_slot}    SeleniumLibrary.Get text    css=.Grid__Container-sc-168em1b-1:nth-child(${i}) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
     ${time_slot}    SeleniumLibrary.Get text    xpath=//div[@data-testid="booking-slot-${i}"]
     BuiltIn.Set global variable    ${time_slot}
 
@@ -92,7 +94,7 @@ Verify cancelled time slot available
 
 Count available times
     SeleniumLibrary.Wait Until Element Is Visible    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"]
-    ${available_times_count}    SeleniumLibrary.Get element count    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"]
+    ${available_times_count}    SeleniumLibrary.Get element count    xpath=//div[contains(@data-testid, "booking-slot")]
     BuiltIn.Set global variable    ${available_times_count}
 
 Remember appointment time
@@ -307,7 +309,8 @@ Buy now
     SeleniumLibrary.Click element    xpath=//button/div
 
 Open login page
-    SeleniumLibrary.Click element    xpath=//a[@data-testid="header-login-link"]
+    SeleniumLibrary.Click element    xpath=//a[contains(@href, '/account')]
+    #SeleniumLibrary.Click element    xpath=//a[@data-testid="header-login-link"]
 
 Click on logout link
     SeleniumLibrary.Click element    xpath=//a[@data-testid="header-logout-link"]
@@ -325,6 +328,8 @@ Create customer
     ${json_data}    Set Variable    ${response.json()}
     ${id}=   Get From Dictionary     ${json_data}    id
     SeleniumLibrary.Go to    ${site_url}/account/create?customerId=${id}&email=automated-test%40sunshinesmile.de
+    Sleep    2s
+    BuiltIn.Run keyword and ignore error    SeleniumLibrary.Click element     css=.Modal__CloseButtonWrapper-sc-1bx8wzc-1 svg
     SeleniumLibrary.Input text    name=password-create-account    Sunshine123@
     SeleniumLibrary.Input text    name=password-repeat-create-account    Sunshine123@
     SeleniumLibrary.Click element    xpath=//button[@type="submit"]
@@ -375,6 +380,7 @@ Purchase treatment
 
 Purchase treatment rate payment
     SeleniumLibrary.Click element    xpath=//div[6]/button/div
+    Sleep    3s
 
 Verify treatment purchase success
     Sleep    3s
@@ -485,12 +491,6 @@ Verify google maps shown
 Verify email already in use
     SeleniumLibrary.Element text should be    xpath=//div[@data-testid="error-message-email"]    Diese E-Mail ist bereits in Benutzung
 
-Remember chosen rate option
-    ${months}    SeleniumLibrary.Get text    //*[@id="__next"]/div/div[3]/div/div/div[2]/div/div[1]/div/div/div/div[2]/div/div[3]/div/div[3]
-    BuiltIn.Set global variable    ${months}
-    ${amount}    SeleniumLibrary.Get text    //*[@id="__next"]/div/div[3]/div/div/div[2]/div/div[1]/div/div/div/div[2]/div/div[3]/div/div[4]
-    BuiltIn.Set global variable    ${amount}
-
 Remember rate details in checkout overview
     ${months_checkout_overview}    SeleniumLibrary.Get text    css=.sc-bdVaJa:nth-child(4)
     BuiltIn.Set global variable    ${months_checkout_overview}
@@ -515,3 +515,20 @@ Verify checkout duration
 
 Verify ipr needed
     SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[6]/div/div/p    ASR
+
+Close cookie consent
+    SeleniumLibrary.Click element    xpath=//div[contains(@class, "CookieBanner")]/a
+
+Choose random rate option
+    ${random_rate_option}    Evaluate    random.randint(2, 5)    modules=random
+    BuiltIn.Set global variable    ${random_rate_option}
+    SeleniumLibrary.Click element    xpath=(//label[contains(@class, "Checkable__CheckableLabel")])[${random_rate_option}]
+
+Remember chosen rate option
+    ${months}    SeleniumLibrary.Get text    xpath=//div[${random_rate_option}]/div/div[3]
+    BuiltIn.Set global variable    ${months}
+    ${amount}    SeleniumLibrary.Get text    xpath=//div[${random_rate_option}]/div/div[4]
+    BuiltIn.Set global variable    ${amount}
+
+Close GeoIP modal
+    SeleniumLibrary.Click element    xpath=//button[@class="modal-close is-large"]

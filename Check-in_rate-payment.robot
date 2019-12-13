@@ -98,6 +98,7 @@ User purchases treatment plan
     Verify voucher code page shown
     Proceed with checkout
     Verify payment rate or one time shown
+    Choose random rate option
     Remember chosen rate option
     Proceed with checkout
     Verify treatment overview page shown

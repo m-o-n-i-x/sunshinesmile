@@ -18,6 +18,7 @@ User makes an appointment
     BuiltIn.run keyword if    '${country}' == 'uk'    Choose London location
     BuiltIn.run keyword if    '${country}' == 'ch'    Choose Bern location
     BuiltIn.run keyword if    '${country}' == 'at'    Choose Wien location
+    Sleep    5s
     Choose random available time
     Run keyword unless    '${country}' == 'uk'    Remember appointment time
     Run keyword if    '${country}' == 'uk'    Remember appointment time UK
@@ -47,6 +48,7 @@ Verify appointment in backend
 User reschedules appointment
     [tags]    de    ch    uk    at
     SeleniumLibrary.Select Window    url=${appointment_url}
+    Run keyword if    '${country}' == 'uk'    Close cookie consent
     Verify original appointment
     Reschedule appointment from interface
     Choose random available time

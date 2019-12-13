@@ -170,10 +170,11 @@ Unfold suppliers list
 
 Physician assigned
     SeleniumLibrary.Click element    xpath=//button[contains(.,'physician assigned')]
+    Sleep    3s
 
 No pre treatment needed
     SeleniumLibrary.Click element    xpath=//button[contains(.,'no pre treatment needed')]
-    Sleep    1s
+    Sleep    3s
 
 Setup done
     SeleniumLibrary.Click element    xpath=//button[contains(.,'setup done')]
@@ -208,16 +209,16 @@ Choose valid until date set
     SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/div/input    ${validity_date}
     #SeleniumLibrary.Input text    xpath=//div[4]/div/div/div/div/div/input    ${validity_date}
     SeleniumLibrary.Reload page
-    Sleep    3s  
+    Sleep    3s
 
 Insert treatment duration
     :FOR    ${i}   IN RANGE    100
     \    SeleniumLibrary.Set focus to element    name=treatmentDuration
-    \    SeleniumLibrary.Input text     name=treatmentDuration    40
+    \    SeleniumLibrary.Input text     name=treatmentDuration    24
     \    Sleep    1s
     \    SeleniumLibrary.Set focus to element    name=numberOfAlignerLowerJaw
     \    Sleep    1s
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentDuration    value    40
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentDuration    value    24
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Insert number of aligner steps
@@ -330,7 +331,7 @@ Set street
     Run keyword if    '${country}' == 'at'    Set at street
 
 Set de street
-    BuiltIn.Set global variable    ${street}    Badensche Str. 52
+    BuiltIn.Set global variable    ${street}    Teststr. 1 20
 
 Set uk street
     BuiltIn.Set global variable    ${street}    90 Cromer St
@@ -339,7 +340,7 @@ Set at street
     BuiltIn.Set global variable    ${street}    Vordere Zollamtsstraße 5
 
 Set ch street
-    BuiltIn.Set global variable    ${street}    Bahnhofstrasse 42
+    BuiltIn.Set global variable    ${street}    See 33
 
 Insert valid street
     Set street
@@ -359,10 +360,10 @@ Set zip code
     Run keyword if    '${country}' == 'at'    Set at zip
 
 Set de zip
-    BuiltIn.Set global variable    ${zip_code}    10825
+    BuiltIn.Set global variable    ${zip_code}    10589
 
 Set ch zip
-    BuiltIn.Set global variable    ${zip_code}    8001
+    BuiltIn.Set global variable    ${zip_code}    3011
 
 Set uk zip
     BuiltIn.Set global variable    ${zip_code}    WC1H 8DD
@@ -388,7 +389,7 @@ Set city
     Run keyword if    '${country}' == 'at'    Set at city
 
 Set de city
-    BuiltIn.Set global variable    ${city}    Berlin
+    BuiltIn.Set global variable    ${city}    Solingen
 
 Set ch city
     BuiltIn.Set global variable    ${city}    Bern
@@ -436,7 +437,7 @@ Medical check
 
 Ipr clearing up
     SeleniumLibrary.Click link    link=ipr clearing up
-
+    Sleep    3s
 
 Id checked
     SeleniumLibrary.Click element    xpath=//button[contains(.,'id checked')]
@@ -463,7 +464,9 @@ Ipr wanted
     SeleniumLibrary.Wait until element is visible    xpath=//button[contains(.,'setup done')]
 
 Tick IPR possible checkbox
-    SeleniumLibrary.Click element    css=.checkbox-col > input
+    SeleniumLibrary.Click element    css=.row:nth-child(5) .chip:nth-child(1)
+
+
 
 Choose pretreatment reason
     Unfold pretreatment reason

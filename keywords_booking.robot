@@ -72,7 +72,7 @@ Verify form prefilled with customer data
     SeleniumLibrary.Element attribute value should be    xpath=//input[@data-testid="booking-form-salutation-f"]    checked    true
 
 Verify Dortmund location
-    SeleniumLibrary.Element text should be    xpath=//h4[contains(@class, "sc-bdVaJa sc-jTzLTM eCMmlJ")]    Dortmund
+    SeleniumLibrary.Element text should be    xpath=//h4[contains(@class, "sc-bdVaJa")]    Dortmund
     ${current_location}    SeleniumLibrary.Get location
     BuiltIn.Should contain    ${current_location}    dortmund
 

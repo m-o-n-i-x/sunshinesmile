@@ -7,6 +7,8 @@ Resource    keywords.robot
 
 Go to set url
     Go to    ${site_url}/set#voucher_code
+    Sleep    3s
+    BuiltIn.Run keyword and ignore error    SeleniumLibrary.Click element     css=.Modal__CloseButtonWrapper-sc-1bx8wzc-1 svg
 
 Order set
     SeleniumLibrary.Click element    xpath=//button[@type="button"]
