@@ -39,12 +39,12 @@ IPR light
     Click view link in process overview section
     Medical check
     Tick IPR possible checkbox
-    Choose pretreatment reason
-    Pretreatment needed
+    Tick patient scanned
+    :FOR    ${pic_num}    IN RANGE    1    9
+    \    BuiltIn.Set global variable    ${pic_num}
+    \    Upload picture
+    Medical check done
     Click done
-    Click Clinic 3D-Scan in process overview section
-    Beam order to 'ipr clearing up' state
-    Ipr clearing up
     Ipr wanted
     Setup done
     Choose Clinic 3D-Scan from main navigation
@@ -61,6 +61,7 @@ IPR light
     Click done
     Set suite variable    ${lower_jaw}    4
     Set suite variable    ${upper_jaw}    10
+    Set suite variable    ${treatment_duration}    16
     Insert treatment duration
     Insert number of aligner lower jaw
     Insert number of aligner upper jaw

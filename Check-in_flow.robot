@@ -62,6 +62,7 @@ SSS order
     Create treatment plan
     Set suite variable    ${lower_jaw}    12
     Set suite variable    ${upper_jaw}    9
+    Set suite variable    ${treatment_duration}    16    
     Insert treatment duration
     Insert number of aligner lower jaw
     Insert number of aligner upper jaw

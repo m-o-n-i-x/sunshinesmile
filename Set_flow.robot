@@ -66,6 +66,7 @@ Back end process for set order
     Click done
     Set suite variable    ${lower_jaw}    5
     Set suite variable    ${upper_jaw}    10
+    Set suite variable    ${treatment_duration}    16    
     Insert treatment duration
     Insert number of aligner lower jaw
     Insert number of aligner upper jaw

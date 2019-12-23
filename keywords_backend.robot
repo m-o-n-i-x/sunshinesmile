@@ -179,6 +179,10 @@ No pre treatment needed
 Setup done
     SeleniumLibrary.Click element    xpath=//button[contains(.,'setup done')]
 
+Medical check done
+    SeleniumLibrary.Click element    xpath=//button[contains(.,'medical check done')]
+    Sleep    3s
+
 Click set link
     SeleniumLibrary.Click link    link=Set
 
@@ -214,11 +218,11 @@ Choose valid until date set
 Insert treatment duration
     :FOR    ${i}   IN RANGE    100
     \    SeleniumLibrary.Set focus to element    name=treatmentDuration
-    \    SeleniumLibrary.Input text     name=treatmentDuration    24
+    \    SeleniumLibrary.Input text     name=treatmentDuration    ${treatment_duration}
     \    Sleep    1s
     \    SeleniumLibrary.Set focus to element    name=numberOfAlignerLowerJaw
     \    Sleep    1s
-    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentDuration    value    24
+    \    ${status}    BuiltIn.Run keyword and return status    SeleniumLibrary.Element attribute value should be    name=treatmentDuration    value    ${treatment_duration}
     \    BuiltIn.Exit for loop if    '${status}' == 'True'
 
 Insert number of aligner steps
@@ -466,7 +470,8 @@ Ipr wanted
 Tick IPR possible checkbox
     SeleniumLibrary.Click element    css=.row:nth-child(5) .chip:nth-child(1)
 
-
+Tick patient scanned
+    SeleniumLibrary.Click element    css=.col-md-6 .chip:nth-child(1)
 
 Choose pretreatment reason
     Unfold pretreatment reason
@@ -573,3 +578,8 @@ Verify appointment canceled
 
 Verify appointment changed
     SeleniumLibrary.Element Attribute Value Should Be    name=status    value    changed
+
+Upload picture
+    SeleniumLibrary.Click element    css=.image-upload-dropzone:nth-child(${pic_num}) img
+    Choose File    css=.image-upload-dropzone:nth-child(${pic_num}) > input    ${CURDIR}${/}attachments\\pictures\\${pic_num}.png
+    Sleep    5s

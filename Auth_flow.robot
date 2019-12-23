@@ -13,6 +13,7 @@ User creates profile
     [tags]    de    ch    uk    at
     Create customer
     Click on logout link
+    Sleep    2s
 
 User logs in
     [tags]    de    ch    uk    at

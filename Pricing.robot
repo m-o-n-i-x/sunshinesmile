@@ -9,6 +9,7 @@ User makes an appointment
     [tags]    de    ch    uk
     Set global variable    ${first}    sss
     Set global variable    ${last}    light
+    Set suite variable    ${treatment_duration}    40    
     Open SSS website
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location

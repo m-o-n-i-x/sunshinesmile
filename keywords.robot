@@ -25,6 +25,7 @@ Library    scipy
 
 Set site url
     BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'staging'    BuiltIn.Set global variable    ${staging_url}    https://sunshine-test-env.co.uk/
+    BuiltIn.Run keyword if    '${country}' == 'es' and '${env}' == 'staging'    BuiltIn.Set global variable    ${staging_url}    https://www-staging.plus-dental.es/
     BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'qa1'    BuiltIn.Set global variable    ${qa1_url}    https://qa1.sunshine-test-env.co.uk/
     BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'qa2'    BuiltIn.Set global variable    ${qa2_url}    https://qa2.sunshine-test-env.co.uk/
     BuiltIn.Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    BuiltIn.Set global variable    ${production_url}    https://sunshinesmile.co.uk/
@@ -44,7 +45,8 @@ Open SSS website
     BuiltIn.Run keyword and ignore error   Close GeoIP modal
 
 Choose location
-    SeleniumLibrary.Click element    xpath=//a[@href="/location"]
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//a[@href="/location"]
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//a[@data-trackevent="clickClinicLocation"]
     Sleep    3s
     BuiltIn.Run keyword and ignore error    SeleniumLibrary.Click element     css=.Modal__CloseButtonWrapper-sc-1bx8wzc-1 svg
 
@@ -61,6 +63,10 @@ Choose Bern location
 
 Choose Wien location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-wien-1-bezirk"]/div/p
+
+Choose Madrid1 location
+    SeleniumLibrary.Click element    xpath=//a[@href="/booking/3d-scan/madrid-arguelles"]
+    Sleep    3s
 
 Choose random available time
     Count available times
@@ -502,7 +508,7 @@ Verify rate details in checkout overview
     BuiltIn.Should contain    ${amount}    ${amount_checkout_overview}
 
 Verify checkout medium treatment
-    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[1]/p[2]    Medium
+    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[1]/p[2]    Mittel
 
 Verify checkout upper jaw
     SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[2]/div/p    ${upper_jaw}
@@ -511,7 +517,7 @@ Verify checkout lower jaw
     SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[3]/div/p    ${lower_jaw}
 
 Verify checkout duration
-    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[4]/div/p    40 Wochen
+    SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[4]/div/p    ${treatment_duration} Wochen
 
 Verify ipr needed
     SeleniumLibrary.Element text should be    xpath=//div[contains(@class, "TreatmentDetailV2__Table")]/div[6]/div/div/p    ASR
