@@ -21,8 +21,9 @@ User makes an appointment
     BuiltIn.run keyword if    '${country}' == 'es'    Choose Madrid1 location
     Sleep    5s
     Choose random available time
-    Run keyword unless    '${country}' == 'uk'    Remember appointment time
+    Run keyword if    '${country}' == 'de' or '${country}' == 'at' or '${country}' == 'ch'    Remember appointment time
     Run keyword if    '${country}' == 'uk'    Remember appointment time UK
+    Run keyword if    '${country}' == 'es'    Remember appointment time ES
     Fill appointment form
     Book appointment
     Verify appointment success
@@ -51,7 +52,7 @@ User reschedules appointment
     [tags]    de    ch    uk    at    es
     SeleniumLibrary.Select Window    url=${appointment_url}
     Run keyword if    '${country}' == 'uk'    Close cookie consent
-    Verify original appointment
+    Run keyword unless    '${country}' == 'es'    Verify original appointment
     Reschedule appointment from interface
     Choose random available time
     Book rescheduled appointment

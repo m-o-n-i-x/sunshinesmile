@@ -65,42 +65,69 @@ Choose Wien location
     SeleniumLibrary.Click element    xpath=//a[@data-testid="location-link-wien-1-bezirk"]/div/p
 
 Choose Madrid1 location
-    SeleniumLibrary.Click element    xpath=//a[@href="/booking/3d-scan/madrid-arguelles"]
+    SeleniumLibrary.Click element    xpath=//a[@href="/booking/3d-scan/madrid-cuatrocaminos"]
     Sleep    3s
 
 Choose random available time
-    Count available times
-    ${random_time}    Evaluate    random.randint(0, ${available_times_count})    modules=random
-    SeleniumLibrary.Click element    xpath=//div[@data-testid="booking-slot-${random_time}"]
+    Run keyword unless    '${country}' == 'es'    Count available times
+    Run keyword if    '${country}' == 'es'    Count available times ES
+    ${random_time}    Evaluate    random.randint(1, ${available_times_count})    modules=random
+    BuiltIn.Set global variable    ${random_time}
+    Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//div[@data-testid="booking-slot-${random_time}"]
+    Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//div[@class="hour-list"]/div[${random_time}]/button
     Sleep    3s
+    Run keyword unless    '${country}' == 'es'    Remember chosen time slot
+    Run keyword if    '${country}' == 'es'    Remember chosen time slot ES
+
+
+Remember chosen time slot
     ${chosen_time_slot}    SeleniumLibrary.Get text    xpath=//div[@data-testid="booking-slot-${random_time}"]
     BuiltIn.Set global variable    ${chosen_time_slot}
 
-Get time slot
+Remember chosen time slot ES
+    ${chosen_time_slot}    SeleniumLibrary.Get text    xpath=//div[@class="hour-list"]/div[${random_time}]/button
+    BuiltIn.Set global variable    ${chosen_time_slot}
+
+Get time slot not ES
     ${time_slot}    SeleniumLibrary.Get text    xpath=//div[@data-testid="booking-slot-${i}"]
     BuiltIn.Set global variable    ${time_slot}
 
+Get time slot ES
+    ${time_slot}    SeleniumLibrary.Get text    xpath=//div[@class="hour-list"]/div[${i}]/button
+    BuiltIn.Set global variable    ${time_slot}
+
+Get time slot
+    BuiltIn.Run keyword unless    '${country}' == 'es'    Get time slot not ES
+    BuiltIn.Run keyword if    '${country}' == 'es'    Get time slot ES
+
 Get all time slots
     @{time_slots}    BuiltIn.Create list
-   :FOR    ${i}    IN RANGE    0    ${available_times_count}
+   :FOR    ${i}    IN RANGE    1    ${available_times_count}+1
    \    BuiltIn.Set global variable    ${i}
    \    Get time slot
    \    Collections.Append to list    ${time_slots}    ${time_slot}
    BuiltIn.Set global variable    @{time_slots}
 
 Verify original time slot not available
-    Count available times
+    Run keyword unless    '${country}' == 'es'    Count available times
+    Run keyword if    '${country}' == 'es'    Count available times ES
     Get all time slots
     Collections.Should not contain match    ${time_slots}    ${chosen_time_slot}
 
 Verify cancelled time slot available
-    Count available times
+    Run keyword unless    '${country}' == 'es'    Count available times
+    Run keyword if    '${country}' == 'es'    Count available times ES
     Get all time slots
     Collections.Should contain match    ${time_slots}    ${chosen_time_slot}
 
 Count available times
     SeleniumLibrary.Wait Until Element Is Visible    xpath=//*[@class="Grid__Container-sc-168em1b-1 eaOSAN"]
     ${available_times_count}    SeleniumLibrary.Get element count    xpath=//div[contains(@data-testid, "booking-slot")]
+    BuiltIn.Set global variable    ${available_times_count}
+
+Count available times ES
+    SeleniumLibrary.Wait Until Element Is Visible    xpath=//*[@class="hour-list"]
+    ${available_times_count}    SeleniumLibrary.Get element count    xpath=//div[@class="hour-list"]/div
     BuiltIn.Set global variable    ${available_times_count}
 
 Remember appointment time
@@ -131,6 +158,10 @@ Remember appointment time UK
     ${appointment_time}    String.Strip string    ${appointment_time}
     BuiltIn.Set global variable    ${appointment_time}
 
+Remember appointment time ES
+    ${appointment}    SeleniumLibrary.Get text    id=selected-date-hour
+    BuiltIn.Set global variable    ${appointment_time}    ${appointment}
+
 Verify original appointment
     SeleniumLibrary.Wait until element is visible    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa
     SeleniumLibrary.Element Should Contain    css=.sc-bdVaJa:nth-child(1) > .sc-bdVaJa > .Grid__Container-sc-168em1b-1:nth-child(2) > .sc-bdVaJa > .sc-bdVaJa > .sc-bdVaJa    ${appointment_date}
@@ -145,55 +176,62 @@ Fill appointment form
     Confirm 18 years old
 
 Confirm 18 years old
-    SeleniumLibrary.Click element    css=.gFYOeV
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    css=.gFYOeV
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//label[@for="confirm"]
 
 Select booking salutation
     Sleep    3s
-    SeleniumLibrary.Scroll Element Into View    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
+    #SeleniumLibrary.Scroll Element Into View    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
     #SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(1) .Checkable__CheckableLabel-tbicms-0
-    SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(2) .Checkable__CheckableLabel-tbicms-0
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    css=.RadioGroup__ListItem-sc-14x04bd-1:nth-child(2) .Checkable__CheckableLabel-tbicms-0
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//label[@for="gender-w"]
 
 Insert booking email
     ${random_string}   Generate Random String    5    [LETTERS]
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-email"]    sss.qa12345+${country}_${random_string}@gmail.com
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-email"]    sss.qa12345+${country}_${random_string}@gmail.com
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Input text    id=email     sss.qa12345+${country}_${random_string}@gmail.com
     BuiltIn.Set global variable    ${email}    sss.qa12345+${country}_${random_string}@gmail.com
 
 Insert booking first name
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-first-name"]    ${first}
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-first-name"]    ${first}
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Input text    id=first-name    ${first}
 
 Insert booking last name
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-last-name"]    ${last}
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-last-name"]    ${last}
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Input text    id=last-name    ${last}
 
 Insert booking mobile phone
-    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-phone"]    0152215151515
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Input text    xpath=//input[@data-testid="booking-form-phone"]    0152215151515
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Input text    id=mobile    0152215151515
 
 Book appointment
     SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     Sleep    3s
-    SeleniumLibrary.Click element    xpath=//button[@data-testid="booking-form-submit"]
-	SeleniumLibrary.Wait Until Element Is Visible    xpath=//a[@data-testid="booking-success-confirm-button"]
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[@data-testid="booking-form-submit"]
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[@type="submit"]
+	  BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Wait Until Element Is Visible    xpath=//a[@data-testid="booking-success-confirm-button"]
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Wait Until Element Is Visible    xpath=//section[@class="section thank-you"]
     Sleep    3s
 
 Book rescheduled appointment
-    SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
-    Sleep    3s
-    SeleniumLibrary.Wait Until Element Is Visible    xpath=//button[@data-testid="reschedule-booking-submit"]
-    SeleniumLibrary.Click element    xpath=//button[@data-testid="reschedule-booking-submit"]
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[@data-testid="reschedule-booking-submit"]
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[contains(@class, "appointment-reschedule-submit")]
     Sleep    3s
 
 Verify appointment success
     Sleep    5s
-    SeleniumLibrary.Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
-    SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="booking-success-confirm-button"]
-    SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="booking-success-confirm-button"]
+    BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="booking-success-confirm-button"]
+    BuiltIn.Run keyword if    '${country}' == 'es'    SeleniumLibrary.Element should be visible    xpath=//section[@class="section thank-you"]
     Run keyword if    '${country}' == 'de' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://sunshine-test-env.de/booking/3d-scan/berlin-mitte/success
     Run keyword if    '${country}' == 'uk' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://sunshine-test-env.co.uk/booking/3d-scan/london-central/success
     Run keyword if    '${country}' == 'ch' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://sunshine-test-env.ch/booking/3d-scan/bern/success
     Run keyword if    '${country}' == 'at' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://sunshine-test-env.at/booking/3d-scan/wien-1-bezirk/success
+    Run keyword if    '${country}' == 'es' and '${env}' == 'staging'    SeleniumLibrary.Location should be    https://www-staging.plus-dental.es/booking/thank-you
     Run keyword if    '${country}' == 'de' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plusdental.de/booking/3d-scan/berlin-mitte/success
     Run keyword if    '${country}' == 'uk' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plusdent.co.uk/booking/3d-scan/london-central/success
     Run keyword if    '${country}' == 'ch' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plusdental.ch/booking/3d-scan/bern/success
     Run keyword if    '${country}' == 'at' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plusdental.at/booking/3d-scan/wien-1-bezirk/success
+    Run keyword if    '${country}' == 'es' and '${env}' == 'production'    SeleniumLibrary.Location should be    https://plus-dental.es/booking/thank-you
 
 Verify logout success
     SeleniumLibrary.Location should be    https://sunshine-test-env.de
@@ -342,17 +380,17 @@ Create customer
     SeleniumLibrary.Wait until element is visible    xpath=//a[@data-testid="header-logout-link"]
 
 Reschedule appointment from interface
-    SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-reschedule"]
-    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-reschedule"]
+    Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-reschedule"]
+    Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//a[contains(@class, "booking-reschudule-button")]
     Sleep    5s
 
 Cancel appointment from interface
-    SeleniumLibrary.Wait until element is visible    xpath=//button[@data-testid="edit-booking-cancel"]
-    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-cancel"]
+    Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-cancel"]
+    Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[contains(@class, "booking-cancel-button")]
 
 Verify appointment cancelled
-    SeleniumLibrary.Wait until element is visible    xpath=//div[contains(@class, "AlertBox__AlertBoxStyled")]
-    SeleniumLibrary.Element should be visible    xpath=//div[contains(@class, "AlertBox__AlertBoxStyled")]
+    Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Element should be visible    xpath=//div[contains(@class, "AlertBox__AlertBoxStyled")]
+    Run keyword if    '${country}' == 'es'    SeleniumLibrary.Element should be visible    xpath=//div[@class="booking-form-alert alert-danger"]
 
 Unfold voucher section
     SeleniumLibrary.Click element    xpath=//a[@data-testid="set-checkout-voucher-cart-toggle-voucher-input"]/div
