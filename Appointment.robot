@@ -52,8 +52,10 @@ User reschedules appointment
     [tags]    de    ch    uk    at    es
     SeleniumLibrary.Select Window    url=${appointment_url}
     Run keyword if    '${country}' == 'uk'    Close cookie consent
+    Run keyword if    '${country}' == 'es'    Close cookie banner
     Run keyword unless    '${country}' == 'es'    Verify original appointment
     Reschedule appointment from interface
+    Run keyword if    '${country}' == 'es'    Close cookie banner
     Choose random available time
     Book rescheduled appointment
     Verify appointment success
@@ -66,6 +68,7 @@ User cancels appointment
 
 Verify cancelled appointment available
     [tags]    de    ch    uk    at    es
+    #Sleep    60s
     Go to website
     Choose location
     BuiltIn.run keyword if    '${country}' == 'de'    Choose Berlin location

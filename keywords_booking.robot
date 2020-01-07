@@ -50,9 +50,9 @@ Get current month
 
 Set days in month
     Get current month
-    BuiltIn.Run keyword if    '${current_month}' == '1' or '${current_month}' == '3' or '${current_month}' == '5' or '${current_month}' == '7' or '${current_month}' == '7' or '${current_month}' == '10' or '${current_month}' == '12'    BuiltIn.Set global variable    ${days_in_month}    31
-    BuiltIn.Run keyword if    '${current_month}' == '2'    BuiltIn.Set global variable    ${days_in_month}    28
-    BuiltIn.Run keyword if    '${current_month}' == '4' or '${current_month}' == '6' or '${current_month}' == '9' or '${current_month}' == '11'    BuiltIn.Set global variable    ${days_in_month}    30
+    BuiltIn.Run keyword if    '${current_month}' == '01' or '${current_month}' == '3' or '${current_month}' == '05' or '${current_month}' == '07' or '${current_month}' == '08' or '${current_month}' == '10' or '${current_month}' == '12'    BuiltIn.Set global variable    ${days_in_month}    31
+    BuiltIn.Run keyword if    '${current_month}' == '02'    BuiltIn.Set global variable    ${days_in_month}    28
+    BuiltIn.Run keyword if    '${current_month}' == '04' or '${current_month}' == '06' or '${current_month}' == '09' or '${current_month}' == '11'    BuiltIn.Set global variable    ${days_in_month}    30
     ${days_in_month}    BuiltIn.convert to integer    ${days_in_month}
     BuiltIn.Set global variable    ${days_in_month}
 

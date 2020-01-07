@@ -42,7 +42,8 @@ Open SSS website
     SeleniumLibrary.Set Window Size    1920         2100
     BuiltIn.Set global variable    ${default_browser}
     BuiltIn.Run keyword and ignore error    SeleniumLibrary.Click element     css=.Modal__CloseButtonWrapper-sc-1bx8wzc-1 svg
-    BuiltIn.Run keyword and ignore error   Close GeoIP modal
+    BuiltIn.Run keyword and ignore error    Close cookie banner
+    BuiltIn.Run keyword and ignore error    Close GeoIP modal
 
 Choose location
     BuiltIn.Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//a[@href="/location"]
@@ -102,7 +103,7 @@ Get time slot
 
 Get all time slots
     @{time_slots}    BuiltIn.Create list
-   :FOR    ${i}    IN RANGE    1    ${available_times_count}+1
+   :FOR    ${i}    IN RANGE    1    ${available_times_count}
    \    BuiltIn.Set global variable    ${i}
    \    Get time slot
    \    Collections.Append to list    ${time_slots}    ${time_slot}
@@ -358,13 +359,15 @@ Open login page
 
 Click on logout link
     SeleniumLibrary.Click element    xpath=//a[@data-testid="header-logout-link"]
+    Sleep    3s
 
 Fill in login form
-    SeleniumLibrary.Input text    name=email-login    ${patient_email}
-    SeleniumLibrary.Input text    name=password-login    ${patient_password}
+    SeleniumLibrary.Input text    name=email-login    ${email}
+    SeleniumLibrary.Input text    name=password-login    Sunshine123#
 
 Login
     SeleniumLibrary.Click element    xpath=(//button)
+    Sleep    3s
 
 Create customer
     RequestsLibrary.Create Session       createProfile     https://admin.sunshine-test-env.de   verify=True
@@ -387,6 +390,7 @@ Reschedule appointment from interface
 Cancel appointment from interface
     Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[@data-testid="edit-booking-cancel"]
     Run keyword if    '${country}' == 'es'    SeleniumLibrary.Click element    xpath=//button[contains(@class, "booking-cancel-button")]
+    Sleep    3s
 
 Verify appointment cancelled
     Run keyword unless    '${country}' == 'es'    SeleniumLibrary.Element should be visible    xpath=//div[contains(@class, "AlertBox__AlertBoxStyled")]
@@ -563,6 +567,9 @@ Verify ipr needed
 Close cookie consent
     SeleniumLibrary.Click element    xpath=//div[contains(@class, "CookieBanner")]/a
 
+Close cookie banner
+    SeleniumLibrary.Click element    xpath=//a[@class="cookie-banner-close-button close-cookie-banner"]
+
 Choose random rate option
     ${random_rate_option}    Evaluate    random.randint(2, 5)    modules=random
     BuiltIn.Set global variable    ${random_rate_option}
@@ -576,3 +583,9 @@ Remember chosen rate option
 
 Close GeoIP modal
     SeleniumLibrary.Click element    xpath=//button[@class="modal-close is-large"]
+
+Verify user logged in
+    SeleniumLibrary.Element should be visible    xpath=//a[@data-testid="header-logout-link"]
+
+Verify user logged off
+    SeleniumLibrary.Element should be visible    xpath=//a[contains(@href, '/account')]

@@ -510,22 +510,22 @@ Upload Onyceph files
 Upload 3Shape files
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup1.obj
-    Sleep    5s
+    Sleep    8s
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup2.obj
-    Sleep    5s
+    Sleep    8s
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup3.obj
-    Sleep    5s
+    Sleep    8s
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup4.obj
-    Sleep    5s
+    Sleep    8s
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup5.obj
-    Sleep    5s
+    Sleep    8s
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a file')]
     Choose File    xpath=(//input[@type='file'])[2]    ${CURDIR}${/}visualization\\3Shape\\Subsetup6.obj
-    Sleep    5s
+    Sleep    8s
 
 Upload PDF
     SeleniumLibrary.Click element    xpath=//p[contains(text(),'Click to upload a video')]
